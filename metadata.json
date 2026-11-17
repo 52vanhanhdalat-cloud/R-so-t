@@ -1,0 +1,6 @@
+{
+  "name": "Hệ Sinh Thái Bảo Hiểm",
+  "description": "Kiểm tra và tối ưu hoá các quyền lợi bảo hiểm, tự động đồng bộ toàn bộ thông tin về Google Sheet trên Google Drive.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hệ Sinh Thái Bảo Hiểm – Kiểm tra và tối ưu hoá các quyền lợi bảo hiểm</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef3f1;--card:#fff;--ink:#0f2a2c;--mute:#5d7274;--line:#d8e2df;--deep:#0c2b2e;--jade:#1f7a6d;--gold:#b98a2b;--goldbg:#f7efd9;--bad:#b4402a;--badbg:#fbe9e4;--ok:#1f7a6d;--okbg:#e2f2ee;--inp:#f7faf9}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0a1517;--card:#112224;--ink:#e8f0ee;--mute:#93a9a9;--line:#23393b;--deep:#06100f;--jade:#3fb5a2;--gold:#e0b85a;--goldbg:#2a2412;--bad:#ef8a73;--badbg:#341c16;--ok:#4cc7b2;--okbg:#10302b;--inp:#0d1c1e}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0a1517;--card:#112224;--ink:#e8f0ee;--mute:#93a9a9;--line:#23393b;--deep:#06100f;--jade:#3fb5a2;--gold:#e0b85a;--goldbg:#2a2412;--bad:#ef8a73;--badbg:#341c16;--ok:#4cc7b2;--okbg:#10302b;--inp:#0d1c1e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 'Be Vietnam Pro',system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--deep);z-index:30}
+.hero{background:var(--deep);color:#eaf3f1;padding:22px 18px 18px}
+.hero small{color:#9fbcb8;font-size:12.5px}
+.hero h1{margin:4px 0 4px;font-size:23px;line-height:1.25;font-weight:700}
+.hero p{margin:0;color:#b8cfcb;font-size:13.5px;max-width:60ch}
+.hr{display:flex;align-items:center;gap:16px;margin-top:16px}
+.ring{--p:0;width:78px;height:78px;border-radius:50%;background:conic-gradient(#d9b45a calc(var(--p)*1%),#ffffff22 0);display:grid;place-items:center;flex:none}
+.ring b{width:60px;height:60px;border-radius:50%;background:var(--deep);display:grid;place-items:center;font-size:17px;color:#fff}
+.hr div.t{font-size:13px;color:#b8cfcb}.hr div.t strong{color:#fff;font-size:14.5px;display:block}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:10px 12px;scrollbar-width:none}
+nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--mute);border-radius:999px;padding:7px 13px;font:600 13px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+nav button.on{background:var(--deep);color:#fff;border-color:var(--deep)}
+nav button i{font-style:normal;color:var(--gold);margin-right:4px}
+main{max-width:860px;margin:0 auto;padding:16px 14px 90px}
+h2{font-size:19px;margin:6px 0 2px}.sub{color:var(--mute);margin:0 0 14px;font-size:13.5px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.c h3{margin:0 0 10px;font-size:15px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.f{display:block}.f span{display:block;font-size:12.5px;color:var(--mute);margin-bottom:3px}
+input,textarea,select{width:100%;border:1px solid var(--line);background:var(--inp);color:var(--ink);border-radius:9px;padding:9px 10px;font:inherit}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+textarea{min-height:60px;resize:vertical}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--line);background:var(--inp);color:var(--ink);border-radius:9px;padding:7px 11px;font:500 13px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+.seg button.on{background:var(--jade);border-color:var(--jade);color:#fff}
+.seg button.on.n{background:var(--bad);border-color:var(--bad)}.seg button.on.u{background:var(--gold);border-color:var(--gold)}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}.row>span{flex:1}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.ck:first-of-type{border-top:0}
+.ck input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--jade);flex:none}
+.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin:4px 0 8px}.bar i{display:block;height:100%;background:var(--jade)}
+.btn{border:0;border-radius:10px;padding:10px 15px;font:600 14px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;background:var(--deep);color:#fff}
+.btn.g2{background:var(--goldbg);color:var(--gold);border:1px solid var(--gold)}.btn.x{background:none;color:var(--bad);padding:4px 8px}
+.tip{background:var(--goldbg);border-left:3px solid var(--gold);padding:10px 12px;border-radius:8px;font-size:13.5px;margin:0 0 12px}
+.tip.bad{background:var(--badbg);border-color:var(--bad)}.tip.ok{background:var(--okbg);border-color:var(--ok)}
+details{border:1px solid var(--line);border-radius:11px;margin-top:8px;background:var(--inp)}
+summary{cursor:pointer;padding:10px 12px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+details[open]>summary{border-bottom:1px solid var(--line)}details>div{padding:10px 12px}
+.tag{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--okbg);color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:8px 4px;border-top:1px solid var(--line);text-align:left}td:last-child,th:last-child{text-align:right;white-space:nowrap}
+tfoot td{font-weight:700;font-size:15.5px}
+pre{white-space:pre-wrap;background:var(--inp);border:1px solid var(--line);border-radius:10px;padding:12px;font:12.5px/1.6 ui-monospace,monospace;max-height:340px;overflow:auto}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:12px}
+.stat div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:var(--mute)}
+@media(prefers-reduced-motion:no-preference){.ring{transition:all .4s}}
+.sync{display:inline-block;margin-top:12px;font-size:12px;padding:4px 10px;border-radius:99px;background:#ffffff1a;color:#cfe3df}.sync.ok{background:#1f7a6d55;color:#bdf2e6}.sync.bad{background:#b4402a66;color:#ffd9d0}.sync.w{background:#b98a2b55;color:#ffe9b8}
+
+.hero{position:relative;overflow:hidden;padding:30px 20px 26px;background:radial-gradient(120% 90% at 85% -10%,#1f7a6d66,transparent 60%),radial-gradient(80% 60% at 0% 100%,#b98a2b33,transparent 60%),var(--deep)}
+.hero::after{content:"";position:absolute;left:20px;right:20px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,#d9b45a,transparent)}
+.hero>*{max-width:740px;margin-left:auto;margin-right:auto}
+.hero h1{font-size:34px;letter-spacing:-.01em;margin:6px auto 8px;font-weight:700}
+.hero .lead{font-size:14.5px;color:#c4d8d4;max-width:740px;margin-bottom:4px}
+.hero .hr{margin-top:20px}.hero .sync{display:block;width:fit-content;margin-left:max(0px,calc((100% - 740px)/2));margin-top:14px}
+main{max-width:760px;padding-top:18px}
+.ac{background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:12px;box-shadow:0 10px 26px -18px #0c2b2e88;overflow:hidden}
+.ac.open{border-color:var(--gold)}
+.ah{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:16px;cursor:pointer;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink)}
+.ah:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.no{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:var(--gold);border:1.5px solid var(--gold);background:var(--goldbg)}
+.ac.open .no{background:var(--gold);color:#fff}
+.tx{flex:1;min-width:0}.tx b{display:block;font-size:16.5px;line-height:1.3}.tx small{color:var(--mute);font-size:13px;line-height:1.4;display:block}
+.st{font-size:12px;color:var(--jade);font-weight:600;white-space:nowrap}
+.ch{flex:none;width:9px;height:9px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg);margin:0 4px 4px 0;transition:transform .2s}.ac.open .ch{transform:rotate(-135deg);margin:6px 4px 0 0}
+.ab{padding:2px 14px 16px;border-top:1px solid var(--line);background:var(--bg)}.ab h2{display:none}.ab .sub{margin-top:12px}
+.foot{text-align:center;color:var(--mute);font-size:12.5px;margin:20px 8px}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 14px}
+.choice button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:2px;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink)}
+.choice button:focus-visible{outline:2px solid var(--gold)}
+.choice b{font-size:16px}.choice small{color:var(--mute);font-size:12.5px}
+.choice button.on{border-color:var(--jade);background:var(--okbg)}.choice button.on.no{border-color:var(--bad);background:var(--badbg)}
+.ck1{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--mute);font-weight:700;margin-bottom:6px}.choice .on .ck1{background:var(--jade);color:#fff}.choice .on.no .ck1{background:var(--bad)}
+.strip{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#ffffff26;border-radius:14px;overflow:hidden;margin-bottom:12px}
+.strip div{background:var(--deep);padding:12px 14px;color:#fff}.strip span{display:block;font-size:12px;color:#9fbcb8}.strip b{font-size:17px}.strip .gd b{color:#e8c36a}
+.lc{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.lh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(100deg,var(--deep),#14464a);color:#fff}
+.lh small{display:block;color:#e0b85a;font-size:12px}.lh b{font-size:16px}.lr{display:flex;align-items:center;gap:6px}.lt{font-size:13px;font-weight:600;color:#ffe3a0;white-space:nowrap}.lh .btn.x{color:#ffb4a3}
+.lb{padding:14px}.lb h4{margin:18px 0 8px;font-size:14px;color:var(--jade);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.lb h4:first-child{margin-top:0}.lb h4 small{font-weight:400;color:var(--mute);font-size:12px}
+.tiles{display:grid;gap:8px}.tile{border:1.5px solid var(--line);border-radius:13px;background:var(--inp);overflow:hidden}.tile.on{border-color:var(--jade);background:var(--card)}
+.tl{display:flex;align-items:center;gap:12px;padding:11px 12px;cursor:pointer}
+.ic{font-size:22px;width:38px;height:38px;display:grid;place-items:center;background:var(--bg);border-radius:10px;flex:none}
+.tn{flex:1;min-width:0}.tn b{display:block;font-size:14.5px}.tn small{color:var(--mute);font-size:12.5px}
+.sw{position:relative;width:46px;height:26px;flex:none}.sw input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;padding:0;border:0;cursor:pointer}
+.sw i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:background .2s}.sw i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px #0004}
+.sw input:checked+i{background:var(--jade)}.sw input:checked+i::after{transform:translateX(20px)}.sw input:focus-visible+i{outline:2px solid var(--gold);outline-offset:2px}
+.tf{padding:4px 12px 12px;border-top:1px dashed var(--line)}.tf .g{margin-top:10px}.wide{width:100%}
+.lb .g,.tf .g{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+@media(max-width:380px){.choice{grid-template-columns:1fr}}
+
+.cover{min-height:min(100svh,780px);display:flex;align-items:center;padding:40px 22px 34px;text-align:center}
+.cover::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;border:1px solid #d9b45a2e;right:-200px;top:-170px;box-shadow:0 0 0 60px #d9b45a0a,0 0 0 120px #d9b45a06;pointer-events:none}
+.cv{width:100%;max-width:640px;position:relative}
+.cover .kk{display:inline-flex;align-items:center;gap:12px;color:#e0b85a;font-size:14.5px;font-weight:600;letter-spacing:.04em}
+.cover .kk::before,.cover .kk::after{content:"";width:30px;height:1px;background:#e0b85a}
+.cover h1{font-size:clamp(24px,6.6vw,38px);line-height:1.28;font-weight:700;letter-spacing:.01em;margin:18px auto 14px;max-width:18em}
+.cover .lead{font-size:15px;color:#c4d8d4;max-width:42ch;margin:0 auto}
+.qt{margin:28px auto 0;padding:22px 18px 14px;border:1px solid #d9b45a55;border-radius:20px;background:#ffffff0d;max-width:520px;position:relative}
+.qt::before{content:"\201C";display:block;font-size:56px;line-height:.8;height:26px;color:#e0b85a;font-weight:700}
+.qt blockquote{cursor:pointer;margin:0;font-size:17.5px;line-height:1.6;color:#fff;font-weight:500;min-height:84px;display:flex;align-items:center;justify-content:center;transition:opacity .4s,transform .4s}
+.qt blockquote.out{opacity:0;transform:translateY(6px)}
+.dots{display:flex;flex-wrap:wrap;gap:0;justify-content:center;margin-top:8px}
+.dots button{all:unset;box-sizing:content-box;width:6px;height:6px;border:4px solid transparent;border-radius:50%;background:#ffffff40;background-clip:padding-box;cursor:pointer}
+.dots button.on{background:#e0b85a;background-clip:padding-box}.dots button:focus-visible{outline:2px solid #e0b85a}
+.go{margin-top:26px;padding:15px 36px;border-radius:99px;border:0;background:linear-gradient(135deg,#efcc78,#b98a2b);color:#10201f;font:700 16px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 30px -12px #e0b85acc;display:inline-flex;align-items:center;gap:10px}
+.go i{width:8px;height:8px;border-right:2px solid #10201f;border-bottom:2px solid #10201f;transform:rotate(45deg);margin-bottom:3px}
+.go:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cover .bd{margin-top:24px;font-size:12.5px;color:#9fbcb8}
+@media(prefers-reduced-motion:reduce){.qt blockquote{transition:none}}
+
+.gc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.gc.g-ok{border-left-color:var(--ok)}.gc.g-no{border-left-color:var(--bad)}.gc.g-u{border-left-color:var(--gold)}
+.gt b{font-size:15.5px}.gq{margin:6px 0 10px;color:var(--mute);line-height:1.6;font-size:14px}
+.gh{margin:0 0 10px;font-size:13px;background:var(--goldbg);padding:8px 10px;border-radius:9px;line-height:1.5}
+.gs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gs button{all:unset;box-sizing:border-box;text-align:center;padding:10px 4px;border-radius:12px;border:1.5px solid var(--line);background:var(--inp);cursor:pointer;font:600 13px 'Be Vietnam Pro',system-ui,sans-serif;color:var(--ink);display:grid;gap:2px;justify-items:center}
+.gs button span{font-size:22px}
+.gs button.on.ok{background:var(--okbg);border-color:var(--ok)}.gs button.on.no{background:var(--badbg);border-color:var(--bad)}.gs button.on.u{background:var(--goldbg);border-color:var(--gold)}
+.gs button:focus-visible{outline:2px solid var(--gold)}.gc details{margin-top:10px}
+.story{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px 10px;margin-bottom:12px}
+.sc{padding:16px 0;border-top:1px solid var(--line)}.sc:first-child{border-top:0}
+.sc h3{margin:0 0 10px;font-size:17px}.sc:first-child h3{font-size:22px;color:var(--gold)}
+.sc p{margin:0 0 11px;line-height:1.8;font-size:15px}
+.sc ul,.sc ol{margin:0;padding-left:20px}.sc li{margin-bottom:9px;line-height:1.75}.sc li::marker{color:var(--gold);font-weight:700}
+.rf{display:grid;gap:3px;padding:11px 13px;margin-bottom:8px;border-radius:12px;background:var(--goldbg)}.rf s{color:var(--mute);font-size:14px}.rf b{font-size:15px;line-height:1.55}
+.sc.q .f{margin-top:14px}.sc.q .f span{color:var(--ink);font-size:14.5px;line-height:1.65;margin-bottom:6px}
+
+.choice button.on.sn{border-color:var(--bad);background:var(--badbg)}.choice .on.sn .ck1{background:var(--bad);color:#fff}
+.gs{grid-template-columns:repeat(5,1fr);gap:6px}.gs button{font-size:11.5px;padding:9px 2px}.gs button span{font-size:20px}
+.gs button.on.s-ok{background:var(--okbg);border-color:var(--ok);color:var(--ink)}
+.gs button.on.s-mid{background:#e8f3df;border-color:#7fb069;color:var(--ink)}
+.gs button.on.s-u{background:var(--goldbg);border-color:var(--gold);color:var(--ink)}
+.gs button.on.s-no{background:var(--badbg);border-color:var(--bad);color:var(--ink)}
+.gs button.on.s-hi{background:#f6d2c9;border-color:#a3321f;color:var(--ink)}
+.gc.g-mid{border-left-color:#7fb069}.gc.g-hi{border-left-color:#a3321f}
+.btn.pdf{background:linear-gradient(135deg,#efcc78,#b98a2b);color:#10201f;font-size:15px;margin:2px 0 12px}
+.hs{text-align:left}.hero-svg{width:100%;height:auto;display:block;border-radius:16px;margin:10px 0 14px}
+.motto{font-weight:600;color:var(--gold);font-size:16px;border-left:3px solid var(--gold);padding-left:12px;margin-top:14px!important}
+.chart{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px;background:var(--inp)}
+.chart h4{margin:0 0 6px;font-size:15px;display:block}.chart .cap{margin:8px 0 0;color:var(--mute);font-size:13.5px;line-height:1.65}
+.chart svg{width:100%;height:auto;max-width:440px;display:block;margin:0 auto}
+.rg{fill:none;stroke:var(--line);stroke-width:1}.rp{fill:rgba(31,122,109,.28);stroke:#1f7a6d;stroke-width:2}.rd{fill:#b98a2b}
+.rt{font-size:12px;fill:var(--ink);font-weight:600}.rs{font-size:11px;fill:var(--mute);font-weight:400}.sv-t{font-size:11px;fill:var(--ink)}.sv-m{font-size:10px;fill:var(--mute)}.sv-b{font-size:13px;fill:var(--ink);font-weight:700}
+.dn{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}.dn svg{width:170px;flex:none;margin:0}
+.lg{list-style:none;margin:0;padding:0;flex:1;min-width:190px;font-size:13px}.lg li{display:flex;gap:8px;align-items:center;padding:3px 0}.lg i{width:11px;height:11px;border-radius:3px;flex:none}.lg span{flex:1}.lg b{white-space:nowrap}
+.dc1{font-size:17px;font-weight:700;fill:var(--ink)}.dc2{font-size:10px;fill:var(--mute)}
+@media screen{#pr{display:none}}
+.pr-h{background:linear-gradient(110deg,#0c2b2e,#14464a);color:#fff;border-radius:12px;padding:18px 20px;margin-bottom:10px}
+.pr-h small{color:#e0b85a;font-weight:600}.pr-h h1{font-size:19pt;line-height:1.25;margin:4px 0 6px}.pr-h p{margin:0;color:#c4d8d4;font-size:10.5pt}
+.pr-s h2{font-size:13.5pt;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px solid #b98a2b;break-after:avoid}
+.pr-s h3{font-size:11.5pt;margin:12px 0 6px;break-after:avoid}
+.pr-t{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6px}
+.pr-t th,.pr-t td{border:1px solid #cfdcd8;padding:4px 7px;text-align:left!important;white-space:normal!important;vertical-align:top;overflow-wrap:anywhere}
+.pr-t th{background:#e8f1ee;font-weight:700}.pr-t tr{break-inside:avoid}.pr-t td:first-child{font-weight:600;width:34%}.pr-t.w td:first-child{width:auto;font-weight:400}
+.pr-ck{columns:2;column-gap:18px;font-size:9.5pt;margin:0;padding:0;list-style:none}.pr-ck li{break-inside:avoid;padding:1px 0}
+.pr-ans{white-space:pre-wrap;border:1px dashed #b98a2b;border-radius:8px;padding:6px 9px;min-height:22px;background:#fffaf0;margin:0 0 8px;overflow-wrap:anywhere}
+.pr-q{font-weight:600;margin:8px 0 3px;break-after:avoid}
+@media print{
+@page{size:A4;margin:12mm}
+:root:not([data-theme=light]),:root{--bg:#fff;--card:#fff;--ink:#0f2a2c;--mute:#5d7274;--line:#d8e2df;--deep:#0c2b2e;--jade:#1f7a6d;--gold:#b98a2b;--goldbg:#f7efd9;--bad:#b4402a;--badbg:#fbe9e4;--ok:#1f7a6d;--okbg:#e2f2ee;--inp:#f7faf9;color-scheme:light}
+html,body{background:#fff!important}body::before{display:none!important}
+body>*:not(#pr){display:none!important}
+#pr{display:block;font-size:10.5pt;line-height:1.6;color:#0f2a2c;font-family:'Be Vietnam Pro',system-ui,sans-serif}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#pr .sc{padding:8px 0;border-top:0}#pr .sc h3{font-size:12pt}#pr .sc p{margin:0 0 7px;line-height:1.7;font-size:10.5pt;orphans:3;widows:3}#pr .sc li{break-inside:avoid;line-height:1.6;margin-bottom:5px}
+#pr .chart{break-inside:avoid;background:#fff}#pr .chart svg{max-width:370px}#pr .dn svg{width:130px}#pr .chart{padding:8px 10px;margin-bottom:8px}#pr .chart h4{font-size:11pt;margin-bottom:2px}#pr .chart .cap{margin-top:4px}#pr .rf{break-inside:avoid}#pr .hero-svg{max-height:60mm;width:auto;margin:6px auto}
+}
+.hint{font-size:12.5px;color:var(--bad);margin:6px 0 0;min-height:0}.hint:empty{display:none}
+</style></head><body>
+<header class="hero cover"><div class="cv"><div class="kk">Hệ Sinh Thái Bảo Hiểm</div><h1>KIỂM TRA VÀ TỐI ƯU HOÁ CÁC QUYỀN LỢI BẢO HIỂM</h1><p class="lead">Hiểu rõ mình đang được bảo vệ bởi những gì, để tự tin chăm lo cho bản thân và gia đình.</p><figure class="qt" style="margin-left:auto;margin-right:auto"><blockquote id="qtx" aria-live="polite" title="Chạm để xem câu tiếp theo" onclick="showQ(qi+1);resetQ()"></blockquote><div class="dots" id="qd"></div></figure><button class="go" type="button" onclick="start()">Bắt đầu<i></i></button><div class="bd">Tự Tin Tài Chính – KHAI MINH</div></div></header>
+<main id="v"></main>
+<script>
+/* === DÁN LINK WEB APP GOOGLE APPS SCRIPT (kết thúc bằng /exec) VÀO DÒNG DƯỚI === */
+/* (Tùy chọn) Khóa chống gửi bậy: điền cùng một chuỗi vào SECRET trong Code.gs. Để trống nếu không dùng. */
+const SHEET_KEY='';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbxPbQmAQkdI90rDGhNxpQheOTFMypaitpa2IEYhLfYSoIaFVQwX8HHI9mpZ6lIpD9rf/exec';
+const K='kmbh5',$=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=v=>+String(v||'').replace(/\D/g,'')||0,fmt=n=>(+n||0).toLocaleString('vi-VN');
+let S={p:{},st:{},ck:{},np:[],lc:[],gp:{},pl:{},cp:{}},cur=-1;
+try{const l=JSON.parse(localStorage.getItem(K));if(l)S=Object.assign(S,l)}catch(e){}
+S.id||='KM-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}schedule()};
+const G=p=>p.split('.').reduce((o,k)=>o==null?o:o[k],S);
+const X=(p,v)=>{const a=p.split('.');let o=S;for(let i=0;i<a.length-1;i++)o=o[a[i]]??={};o[a.at(-1)]=v};
+const CK={
+bhxh:['Tôi tham gia BHXH bắt buộc qua doanh nghiệp','Tôi đã kiểm tra quá trình đóng BHXH trên VssID','Doanh nghiệp đóng đúng mức lương làm căn cứ','Tôi hiểu chế độ ốm đau và điều kiện hưởng','Tôi hiểu chế độ thai sản hoặc quyền lợi liên quan','Tôi hiểu chế độ tai nạn lao động, bệnh nghề nghiệp','Tôi đã kiểm tra số năm đóng và kế hoạch nghỉ hưu','Tôi đã tìm hiểu BHXH tự nguyện nếu không thuộc diện bắt buộc','Tôi đã kiểm tra chế độ tử tuất và người thân được hưởng'],
+bhyt:['Tôi có thẻ BHYT còn giá trị','Tôi biết nơi đăng ký khám chữa bệnh ban đầu','Tôi hiểu mức hưởng BHYT của mình','Tôi biết quy trình khám đúng tuyến và chuyển tuyến','Tôi biết khoản được thanh toán và khoản phải tự trả','Tôi đã kiểm tra thời gian tham gia liên tục','Tôi hiểu điều kiện hưởng quyền lợi 5 năm liên tục','Các thành viên gia đình đều có BHYT phù hợp'],
+pnt:['Tôi có bảo hiểm sức khỏe bổ sung nếu cần','Tôi có quyền lợi nội trú phù hợp','Tôi có quyền lợi ngoại trú nếu cần','Tôi đã xem hạn mức phòng, giường, phẫu thuật','Tôi hiểu thời gian chờ, bệnh có sẵn, điều khoản loại trừ','Tôi có bảo hiểm tai nạn cá nhân','Tôi có TNDS bắt buộc xe cơ giới nếu thuộc diện phải có','Tôi đã cân nhắc bảo hiểm vật chất xe','Tôi đã đánh giá bảo hiểm nhà ở, cháy nổ, tài sản','Tôi đã đánh giá bảo hiểm du lịch','Tôi đã xem xét bảo hiểm trách nhiệm nghề nghiệp, kinh doanh nếu cần','Tôi biết thời hạn, mức khấu trừ và quy trình bồi thường'],
+nt:['Tôi xác định ai là người tạo thu nhập chính','Tôi xác định những người phụ thuộc vào mình','Tôi có giải pháp bảo vệ rủi ro tử vong','Số tiền bảo hiểm cân nhắc theo thu nhập, nợ, trách nhiệm gia đình','Thời hạn bảo vệ phù hợp giai đoạn có trách nhiệm tài chính','Tôi hiểu sản phẩm chính và quyền lợi cơ bản','Tôi hiểu phí, thời hạn đóng phí và thời hạn bảo vệ','Tôi phân biệt số tiền bảo hiểm, giá trị tài khoản, giá trị hoàn lại','Tôi hiểu phí và rủi ro của sản phẩm liên kết đầu tư nếu có','Tôi đã chỉ định và rà soát người thụ hưởng'],
+bt:['Tôi có hoặc đã đánh giá thẻ chăm sóc sức khỏe','Tôi đã đánh giá quyền lợi nội trú','Tôi đã đánh giá quyền lợi ngoại trú','Tôi đã đánh giá trợ cấp nằm viện','Tôi đã đánh giá quyền lợi phẫu thuật, can thiệp y tế','Tôi có hoặc đã đánh giá bệnh lý nghiêm trọng','Tôi đã kiểm tra danh mục và định nghĩa bệnh được bảo hiểm','Tôi đã đánh giá quyền lợi tai nạn và thương tật','Tôi đã đánh giá quyền lợi hỗ trợ đóng phí','Tôi đã tìm hiểu quyền lợi hỗ trợ cho người thân','Tôi hiểu điều kiện tham gia, thời gian chờ, loại trừ từng quyền lợi','Tôi đã kiểm tra thời hạn hiệu lực từng sản phẩm bổ trợ'],
+ql:['Tôi lưu đầy đủ hợp đồng và giấy chứng nhận','Tôi biết cách liên hệ công ty bảo hiểm','Tôi biết quy trình yêu cầu giải quyết quyền lợi','Tôi khai báo trung thực thông tin sức khỏe, nghề nghiệp','Tôi đã kiểm tra điều khoản loại trừ và thời gian chờ','Tôi có kế hoạch đóng phí đúng hạn','Ngân sách bảo hiểm phù hợp dòng tiền gia đình','Tôi có quỹ dự phòng để duy trì hợp đồng khi thu nhập gián đoạn','Tôi rà soát hợp đồng mỗi năm hoặc khi gia đình có thay đổi lớn','Tôi đã kiểm tra nguy cơ trùng lặp hoặc thiếu lớp bảo vệ']};
+const CKT={bhxh:'Bảo hiểm xã hội',bhyt:'Bảo hiểm y tế',pnt:'Bảo hiểm phi nhân thọ',nt:'Nhân thọ – sản phẩm chính',bt:'Nhân thọ – sản phẩm bổ trợ',ql:'Quản lý hợp đồng và khả năng duy trì'};
+const TOTAL=61;
+const ST=['BHXH bắt buộc','BHYT','BHTN','BHXH tự nguyện','Bảo hiểm sức khỏe thương mại','Bảo hiểm nhân thọ','Bảo hiểm tai nạn'];
+const GRP=['Lao động có đóng BHXH, BHYT, BHTN','Lao động chưa đóng đủ hoặc chưa rõ','Lao động tự do','Chủ hộ kinh doanh / doanh nghiệp','Đã nghỉ hưu','Chưa có việc làm / tạm nghỉ','Khác'];
+const NP=['Sức khỏe','Nội trú','Ngoại trú','Tai nạn','Xe – TNDS bắt buộc','Vật chất xe','Nhà ở / tài sản','Cháy nổ','Du lịch','Trách nhiệm nghề nghiệp','Trách nhiệm kinh doanh','Khác'];
+const RD=[['hs','Thẻ chăm sóc sức khỏe','Nội trú, ngoại trú, phẫu thuật, cấp cứu, phòng/ngày, đồng chi trả, thời gian chờ, bệnh có sẵn…'],['tc','Trợ cấp y tế – nằm viện/ngày','Mức/ngày, số ngày tối đa mỗi lần và mỗi năm, điều kiện nhập viện…'],['bl','Bệnh lý nghiêm trọng','Số nhóm bệnh, giai đoạn sớm/nghiêm trọng, tỷ lệ chi trả, số lần chi trả, điều kiện chẩn đoán…'],['tn','Tai nạn','Tử vong, thương tật toàn bộ/bộ phận, chi phí y tế, trợ cấp nằm viện, phạm vi loại trừ…'],['mp','Hỗ trợ / miễn đóng phí','Điều kiện kích hoạt, người được bảo vệ, phần phí được miễn, thời gian miễn…']];
+const MAIN=[['co','Công ty bảo hiểm'],['pr','Tên sản phẩm'],['no','Số hợp đồng (có thể bỏ trống)'],['buy','Bên mua bảo hiểm'],['ins','Người được bảo hiểm'],['start','Ngày bắt đầu','date'],['term','Thời hạn hợp đồng'],['pay','Thời hạn đóng phí'],['sum','Số tiền bảo hiểm chính (đ)','m'],['fee','Phí cơ bản/năm (đ)','m'],['death','Quyền lợi tử vong (đ)','m'],['tpd','Thương tật toàn bộ và vĩnh viễn (đ)','m'],['mat','Quyền lợi đáo hạn (đ)','m'],['val','Giá trị tài khoản / hoàn lại (đ)','m'],['ben','Người thụ hưởng'],['sts','Tình trạng hợp đồng']];
+const GP=['Bảo vệ thu nhập người tạo thu nhập chính','Bảo vệ khi tử vong','Bảo vệ khi thương tật toàn bộ, vĩnh viễn','Chi phí khám chữa bệnh','Điều trị nội trú','Điều trị ngoại trú','Bệnh lý nghiêm trọng','Tai nạn và thương tật','Trợ cấp nằm viện','Bảo vệ người phụ thuộc','Hưu trí và thu nhập tuổi già','Bảo vệ nhà ở và tài sản','Bảo vệ xe và trách nhiệm','Bảo vệ hoạt động kinh doanh'];
+const PL=['Kiểm tra lại BHXH, BHYT, BHTN','Rà soát hợp đồng nhân thọ hiện có','Rà soát thẻ sức khỏe và quyền lợi y tế','Đánh giá số tiền bảo hiểm tử vong','Đánh giá quyền lợi bệnh lý nghiêm trọng','Đánh giá quyền lợi tai nạn','Đánh giá quyền lợi hỗ trợ đóng phí','Kiểm tra bảo hiểm tài sản và trách nhiệm','Xác định ngân sách bảo hiểm phù hợp','Lập kế hoạch bổ sung khoảng trống'];
+const I=(p,l,o={})=>{const v=G(p)??'';return `<label class="f"><span>${l}</span><input data-b="${p}" type="${o.t||'text'}" ${o.m?'inputmode="numeric" data-m="1"':''} value="${esc(o.m&&v?fmt(v):v)}" placeholder="${esc(o.ph||'')}"></label>`};
+const SG=(p,opts,cls=[])=>`<div class="seg">${opts.map(([v,t],i)=>`<button type="button" class="${G(p)===v?'on':''} ${cls[i]||''}" onclick="setv('${p}','${v}')">${t}</button>`).join('')}</div>`;
+const CHK=g=>{const a=CK[g],d=a.filter((_,i)=>S.ck[g+i]).length;return `<div class="c"><h3>${CKT[g]}</h3>${a.map((t,i)=>`<label class="ck"><input type="checkbox" data-b="ck.${g}${i}" ${S.ck[g+i]?'checked':''}><span>${t}</span></label>`).join('')}<label class="f" style="margin-top:8px"><span>Ghi chú / nội dung cần bổ sung</span><textarea data-b="cp.n_${g}">${esc(S.cp['n_'+g]||'')}</textarea></label></div>`};
+const setv=(p,v)=>{X(p,G(p)===v?'':v);save();R()};
+const add=k=>{S[k].push(k=='lc'?{r:{}}:{});save();R()};
+const del=(k,i)=>{if(confirm('Xóa dòng này?')){S[k].splice(i,1);save();R()}};
+const age=d=>{if(!d)return'';const b=new Date(d),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a>=0&&a<120?a:''};
+
+const JOBS=['Nhân viên văn phòng','Công chức – viên chức','Giáo viên – giảng viên','Y tế (bác sĩ, điều dưỡng, dược)','Kỹ sư – IT – công nghệ','Kinh doanh – bán hàng','Tài chính – ngân hàng – kế toán','Chủ doanh nghiệp – hộ kinh doanh','Công nhân – lao động sản xuất','Lao động tự do – freelancer','Tài xế – vận tải – giao hàng','Nông nghiệp – lao động nông thôn','Nội trợ – nghỉ hưu – chưa đi làm'];
+const jobOf=()=>G('p.job')==='__other'?(G('p.job2')||'Khác'):(G('p.job')||'');
+const marOf=()=>G('p.mar')==='Khác'?(G('p.mar2')||'Khác'):(G('p.mar')||'');
+const kidsStr=()=>{const n=Math.min(+G('p.nk')||0,10);return n?Array.from({length:n},(_,i)=>`Con ${i+1}: ${G('p.k'+i)||'?'} tuổi`).join('; '):''};
+const kidsH=()=>{const n=Math.min(+G('p.nk')||0,10);return Array.from({length:n},(_,i)=>I('p.k'+i,'Tuổi con '+(i+1),{t:'number'})).join('')};
+const kidsR=()=>{const k=$('#kids');if(k)k.innerHTML=kidsH()};
+const addx=i=>{(S.lc[i].x||=[]).push({});save();R()};
+const delx=(i,j)=>{if(confirm('Xóa quyền lợi này?')){S.lc[i].x.splice(j,1);save();R()}};
+const lcRF=c=>RD.reduce((q,r)=>q+num(c.r?.[r[0]]?.fee),0)+(c.x||[]).reduce((q,z)=>q+num(z.fee),0);
+const RI={hs:'🏥',tc:'🛏️',bl:'🎗️',tn:'🚑',mp:'🔓'},RS={hs:'Viện phí nội trú, ngoại trú, phẫu thuật',tc:'Tiền hỗ trợ mỗi ngày nằm viện',bl:'Bệnh nan y, bệnh hiểm nghèo',tn:'Tử vong, thương tật do tai nạn',mp:'Được miễn đóng phí khi có biến cố'};
+const MF=Object.fromEntries(MAIN.map(m=>[m[0],m]));
+const fld=(i,k)=>{const m=MF[k];return I(`lc.${i}.${k}`,m[1],{t:m[2]=='date'?'date':'text',m:m[2]=='m',ph:m[2]=='m'?'VD: 500.000.000':''})};
+const pickNT=v=>{if(G('p.nt')===v){setv('p.nt',v);return}X('p.nt',v);if(v==='y'&&!S.lc.length)S.lc.push({r:{}});save();R()};
+const lcCard=(c,i)=>`<article class="lc"><header class="lh"><div><small>Hợp đồng ${i+1}</small><b>${esc(c.co||'Chưa nhập công ty')}</b></div><div class="lr"><span class="lt" id="lt${i}"></span><button class="btn x" type="button" onclick="del('lc',${i})">Xóa</button></div></header><div class="lb"><h4>Thông tin hợp đồng</h4><div class="g">${['co','pr','no','buy','ins','start','term','pay'].map(k=>fld(i,k)).join('')}</div><h4>Quyền lợi chính</h4><div class="g">${['sum','fee','death','tpd','mat','val','ben','sts'].map(k=>fld(i,k)).join('')}</div><h4>Giải pháp đính kèm <small>Bật công tắc cho quyền lợi bạn đang có</small></h4><div class="tiles">${RD.map(([k,t,h])=>{const r=c.r?.[k]||{};return `<div class="tile${r.on?' on':''}"><label class="tl"><span class="ic">${RI[k]}</span><span class="tn"><b>${t}</b><small>${RS[k]}</small></span><span class="sw"><input type="checkbox" data-b="lc.${i}.r.${k}.on" ${r.on?'checked':''} aria-label="${t}"><i></i></span></label>${r.on?`<div class="tf"><div class="g">${I(`lc.${i}.r.${k}.lim`,'Số tiền / hạn mức (đ)',{m:1})}${I(`lc.${i}.r.${k}.fee`,'Phí đóng/năm (đ)',{m:1})}${I(`lc.${i}.r.${k}.term`,'Thời hạn hiệu lực')}</div><label class="f" style="margin-top:8px"><span>Chi tiết và điều kiện</span><textarea data-b="lc.${i}.r.${k}.note" placeholder="${esc(h)}">${esc(r.note||'')}</textarea></label></div>`:''}</div>`}).join('')}</div><h4>Quyền lợi bổ trợ khác</h4>${(c.x||[]).map((z,j)=>`<div class="tile on" style="margin-bottom:8px"><div class="tf" style="border:0"><div class="row" style="border:0;padding:6px 0 0"><b>Quyền lợi ${j+1}</b><button class="btn x" type="button" onclick="delx(${i},${j})">Xóa</button></div><div class="g">${I(`lc.${i}.x.${j}.name`,'Tên quyền lợi')}${I(`lc.${i}.x.${j}.lim`,'Số tiền / hạn mức (đ)',{m:1})}${I(`lc.${i}.x.${j}.fee`,'Phí đóng/năm (đ)',{m:1})}${I(`lc.${i}.x.${j}.term`,'Thời hạn')}</div><label class="f" style="margin-top:8px"><span>Chi tiết và điều kiện</span><textarea data-b="lc.${i}.x.${j}.note">${esc(z.note||'')}</textarea></label></div></div>`).join('')}<button class="btn g2 wide" type="button" onclick="addx(${i})">+ Thêm quyền lợi khác</button></div></article>`;
+
+
+const hash=t=>{let h=0;for(const ch of String(t))h=(h*31+ch.charCodeAt(0))>>>0;return h};
+const lc1=t=>t?t.charAt(0).toLowerCase()+t.slice(1):t;
+const list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' và '+a[a.length-1];
+const RN={hs:'thẻ chăm sóc sức khỏe',tc:'trợ cấp nằm viện',bl:'bảo hiểm bệnh lý nghiêm trọng',tn:'bảo hiểm tai nạn',mp:'miễn đóng phí'};
+const GQ=['Nếu người trụ cột phải nghỉ làm vài tháng vì bệnh, thu nhập của gia đình có được giữ vững không?','Nếu mình không còn, người thân có đủ tiền để sống, lo việc học và trả các khoản nợ không?','Nếu mình mất khả năng lao động, ai sẽ lo cho mình và cho gia đình?','Khi cần đi khám chữa bệnh, mình có yên tâm về chi phí không?','Nếu phải nằm viện hay phẫu thuật, viện phí đã có chỗ lo chưa?','Những lần khám nhỏ, thuốc men trong năm có được hỗ trợ không?','Nếu chẩn đoán bệnh nặng, mình có khoản tiền để điều trị mà không phải bán tài sản hay vay mượn không?','Nếu chẳng may gặp tai nạn, mình và gia đình được bảo vệ đến đâu?','Những ngày nằm viện không đi làm được, có khoản nào bù lại thu nhập không?','Cha mẹ, con cái đang dựa vào mình đã có lớp bảo vệ riêng chưa?','Đến tuổi nghỉ ngơi, mình có nguồn thu nhập đều đặn để sống tự tin không?','Căn nhà và tài sản mình gây dựng có được bảo vệ trước rủi ro không?','Nếu xảy ra va chạm giao thông, mình có được bảo vệ về chi phí và trách nhiệm không?','Nếu công việc kinh doanh gặp biến cố, có gì giữ cho nó không đổ vỡ?'];
+function fx(){const p=S.p,c=cost(),nm=(p.name||'').trim(),giv=nm?nm.split(/\s+/).pop():'bạn',nK=p.kid==='y'?(+p.nk||0):0,ks=[];
+for(let i=0;i<Math.min(nK,10);i++){const v=p['k'+i];if(v!==undefined&&v!=='')ks.push(+v)}
+const rid=new Set();S.lc.forEach(x=>RD.forEach(([k])=>{if(x.r?.[k]?.on)rid.add(k)}));const npT=new Set(S.np.map(r=>r.t).filter(Boolean));
+const sumDeath=S.lc.reduce((q,x)=>q+num(x.sum),0),inc=num(p.income||p.salary)*12;
+return{p,c,nm,giv,age:age(p.dob),job:jobOf(),mar:marOf(),nK,ks,yg:ks.length?Math.min(...ks):null,dep:+p.dep||0,rid,npT,lcN:S.lc.length,npN:S.np.length,nt:p.nt,sumDeath,inc,mult:inc&&sumDeath?sumDeath/inc:null,tpd:S.lc.reduce((q,x)=>q+num(x.tpd),0),health:rid.has('hs')||['Sức khỏe','Nội trú','Ngoại trú'].some(t=>npT.has(t)),acc:rid.has('tn')||npT.has('Tai nạn'),cos:[...new Set(S.lc.map(x=>(x.co||'').trim()).filter(Boolean))],noBen:S.lc.some(x=>!(x.ben||'').trim()),g:gaps()}}
+function gapHint(i){const F=fx();if(!F.nt&&!F.lcN&&!F.npN)return'';const has=F.nt==='y'||F.npN>0,np=t=>F.npT.has(t);
+if(i<2)return F.lcN?(F.sumDeath?`Bạn đã kê tổng số tiền bảo hiểm chính ${fmt(F.sumDeath)} đ`+(F.mult!=null?`, khoảng ${d1(F.mult)} lần thu nhập năm.`:'.'):'Bạn chưa nhập số tiền bảo hiểm chính.'):'Chưa thấy hợp đồng nhân thọ trong hồ sơ.';
+if(i===2)return F.tpd>0?'Hồ sơ có ghi quyền lợi thương tật toàn bộ và vĩnh viễn.':(F.lcN?'Chưa thấy quyền lợi thương tật toàn bộ và vĩnh viễn trong hồ sơ.':'');
+if(i>=3&&i<=5)return has?(F.health?'Hồ sơ cho thấy bạn đã có quyền lợi chăm sóc sức khỏe ngoài BHYT.':'Chưa thấy quyền lợi chăm sóc sức khỏe nào ngoài BHYT trong hồ sơ.'):'';
+if(i===6)return has?(F.rid.has('bl')?'Bạn đã có giải pháp bệnh lý nghiêm trọng.':'Chưa thấy giải pháp bệnh lý nghiêm trọng trong hồ sơ.'):'';
+if(i===7)return has?(F.acc?'Bạn đã có quyền lợi tai nạn.':'Chưa thấy quyền lợi tai nạn trong hồ sơ.'):'';
+if(i===8)return has?(F.rid.has('tc')?'Bạn đã có trợ cấp nằm viện.':'Chưa thấy trợ cấp nằm viện trong hồ sơ.'):'';
+if(i===11)return F.npN?(np('Nhà ở / tài sản')||np('Cháy nổ')?'Bạn đã có bảo hiểm nhà ở/tài sản.':'Chưa thấy bảo hiểm nhà ở/tài sản.'):'';
+if(i===12)return F.npN?(np('Xe – TNDS bắt buộc')||np('Vật chất xe')?'Bạn đã có bảo hiểm xe.':'Chưa thấy bảo hiểm xe.'):'';
+if(i===13)return F.npN?(np('Trách nhiệm kinh doanh')?'Bạn đã có bảo hiểm trách nhiệm kinh doanh.':''):'';
+return''}
+function story(){const F=fx(),{c,giv,job,mar,nK,yg,dep,rid,lcN,nt,mult,g,p}=F,H=hash(S.id||'x'),pk=(a,k=0)=>a[(H+k)%a.length],secs=[],ag=F.age,wed=/kết hôn/i.test(mar||''),kd=nK>0||dep>0;
+const ptr=[ag?ag+' tuổi':'',job?'làm nghề '+lc1(job):'',mar?lc1(mar):'',nK?`có ${nK} con`+(yg!=null?` (bé nhỏ nhất ${yg} tuổi)`:''):(p.kid==='n'?'chưa có con':'')].filter(Boolean).join(', ');
+const par=[pk(['Trước hết, xin cảm ơn bạn đã dành thời gian ngồi lại với chính mình. Kiểm tra quyền lợi bảo hiểm không phải việc ai cũng làm, vì nó cần một chút can đảm: dám nhìn thẳng vào những điều mình vẫn mong sẽ không bao giờ xảy ra.','Có những cuộc trò chuyện ta hay né vì sợ “nói gở”, trong khi chính những cuộc trò chuyện ấy lại giúp ta sống nhẹ lòng hơn. Việc bạn mở bản kiểm tra này là một cử chỉ thương mình và thương người thân, đáng được ghi nhận.','Người Việt mình quen lo cho người khác trước, lo cho bản thân sau. Hôm nay bạn đã làm ngược lại một chút: dừng lại, nhìn xem mình đang được bảo vệ ra sao. Đó là bước đầu của sự tự tin tài chính.','Tự tin tài chính không bắt đầu từ việc có thật nhiều tiền, mà từ việc biết rõ mình đang có gì và còn thiếu gì. Những gì bạn vừa kê khai chính là tấm bản đồ đầu tiên cho hành trình ấy.','Một người trưởng thành thường gánh nhiều vai cùng lúc: người làm, người thương, người lo. Bản đọc dưới đây được viết riêng từ những gì bạn chia sẻ, để bạn nhìn lại hành trình của mình bằng ánh mắt dịu dàng và tỉnh táo.','Cảm ơn bạn đã tin tưởng chia sẻ những điều rất riêng tư. Với người Việt mình, nói chuyện tiền bạc và rủi ro vốn không dễ, nên việc bạn ngồi đây và đi đến những dòng này đã là một sự trưởng thành đáng trân trọng.','Ông bà mình có câu “có thực mới vực được đạo”: muốn thương người thân cho bền, nền tài chính cũng cần vững. Bản đọc này giúp bạn nhìn lại nền ấy thật nhẹ nhàng, không phán xét.','Không ai sinh ra đã hiểu hết về bảo hiểm, và cũng không ai cần phải hoàn hảo ở chuyện này. Điều quan trọng là bạn bắt đầu nhìn vào nó bằng một trái tim bình tĩnh.'])];
+if(ptr)par.push(`Qua hồ sơ, hình ảnh hiện lên là một người ${ptr}.`+(nK&&yg!=null&&yg<=12?' Có con nhỏ trong nhà, mỗi quyết định tài chính của bạn không còn chỉ là chuyện của riêng mình mà là chỗ dựa cho cả một mái ấm.':dep>0?` Bạn đang là chỗ dựa cho ${dep} người phụ thuộc, một sự tin cậy rất lớn.`:(ag&&ag<=35&&!nK?' Ở độ tuổi này, chi phí bảo hiểm còn nhẹ và sức khỏe còn đứng về phía bạn, nên đây là thời điểm đẹp để xây nền.':'')));
+else par.push('Hồ sơ của bạn hiện còn khá ít thông tin nên bản đọc này mới ở mức phác thảo. Khi bạn bổ sung thêm, bức tranh sẽ rõ nét và chính xác hơn.');
+secs.push({t:`Gửi ${giv},`,k:'p',p:par});
+const pic=[];
+if(nt==='y'&&lcN){pic.push(`Về nhân thọ, bạn đang có ${lcN} hợp đồng${F.cos.length?' tại '+list(F.cos):''}${c.tot?`, tổng phí bảo hiểm khoảng ${fmt(c.tot)} đ mỗi năm`:''}${c.pct!=null?`, tương đương ${d1(c.pct)}% thu nhập năm`:''}.`);
+pic.push(rid.size?`Bên cạnh sản phẩm chính, bạn đã đính kèm ${list([...rid].map(k=>RN[k]))}. Đây là những “lớp áo” giúp quyền lợi không chỉ dừng ở một con số tử vong.`:'Hiện hồ sơ chưa ghi giải pháp đính kèm nào, nghĩa là sự bảo vệ chủ yếu nằm ở sản phẩm chính. Nếu bạn có thẻ sức khỏe hay bệnh lý nghiêm trọng ở hợp đồng khác, hãy bổ sung để bức tranh đầy đủ hơn.');
+if(mult!=null)pic.push(`Tổng số tiền bảo hiểm chính bạn kê khai là ${fmt(F.sumDeath)} đ, khoảng ${d1(mult)} lần thu nhập năm. ${mult>=10?'Đây là mức khá vững so với mốc tham khảo thường dùng 5–10 lần.':mult>=5?'Con số này nằm trong vùng tham khảo thường dùng là 5–10 lần thu nhập năm.':'Con số này thấp hơn mốc tham khảo thường dùng là 5–10 lần thu nhập năm, nên đáng cân nhắc lại, nhất là khi còn người phụ thuộc hoặc khoản nợ.'}`)}
+else if(nt==='n')pic.push(`Hiện bạn chưa tham gia bảo hiểm nhân thọ${p.ntn?`. Bạn chia sẻ lý do: “${String(p.ntn).slice(0,140)}”. Lý do nào cũng có phần đúng của nó, và ta sẽ nhìn nó kỹ hơn ở phần câu hỏi bên dưới`:''}.`);
+else pic.push('Phần bảo hiểm nhân thọ trong hồ sơ còn để trống, nên bức tranh về nhân thọ chưa thể nhìn rõ.');
+if(F.npN)pic.push(`Về phi nhân thọ, bạn có ${F.npN} hợp đồng${F.npT.size?` (${list([...F.npT].map(lc1))})`:''}.`);
+{const bs=[bxOn()&&S.st[0]==='y'?'BHXH':'',S.st[1]==='y'?'BHYT':''].filter(Boolean);if(bs.length)pic.push(`Lớp nền ${list(bs)} bạn đang có là điểm tựa quan trọng: bảo hiểm thương mại nên bổ sung cho nó chứ không thay thế nó.`)}
+secs.push({t:'Bức tranh bảo vệ hiện tại',k:'p',p:pic});
+const sg=[];
+if(lcN)sg.push('Bạn đã chủ động có hợp đồng nhân thọ, một việc mà nhiều người vẫn đang trì hoãn.');
+if(rid.size>=2)sg.push(`Bạn không dừng ở sản phẩm chính mà còn đính kèm ${rid.size} giải pháp bổ trợ, cho thấy bạn nghĩ đến những rủi ro cụ thể như bệnh tật và tai nạn.`);
+if(c.pct!=null&&c.tot&&c.pct>=3&&c.pct<=20)sg.push(`Mức phí ${d1(c.pct)}% thu nhập cho thấy bạn cân đối khá hài hoà giữa bảo vệ và cuộc sống hằng ngày.`);
+if(mult!=null&&mult>=5)sg.push('Số tiền bảo hiểm chính của bạn đã đạt vùng tham khảo, người thân sẽ có một điểm tựa tài chính đáng kể.');
+if(S.st[1]==='y')sg.push('Bạn có BHYT, nền tảng chăm sóc sức khỏe đầu tiên.');
+if(g.ok.length)sg.push(`Bạn thấy yên tâm ở các mục: ${g.ok.length>3?g.ok.slice(0,3).map(lc1).join(', ')+' và một số mục khác':list(g.ok.map(lc1))}.`);
+if(!sg.length)sg.push('Điều đáng quý nhất lúc này là bạn đã bắt đầu. Biết mình đang đứng ở đâu luôn là bước đầu tiên của mọi sự thay đổi.');
+secs.push({t:'Điều bạn đang làm tốt',k:'l',p:sg});
+const cn=[],has=nt==='y'||F.npN>0;
+if(nt==='n')cn.push(kd?'Chưa có nhân thọ trong khi có người đang dựa vào bạn. Đây có lẽ là khoảng trống đáng nghĩ tới đầu tiên, không phải vì sợ hãi mà vì bạn thương họ.':'Chưa có nhân thọ. Khi còn trẻ và chưa nhiều ràng buộc, bạn có lợi thế về chi phí và sức khỏe nếu muốn bắt đầu.');
+if(lcN&&mult!=null&&mult<5&&kd)cn.push(`Số tiền bảo hiểm chính mới bằng khoảng ${d1(mult)} lần thu nhập năm, trong khi bạn đang là chỗ dựa cho người thân. Thử hỏi: nếu bạn vắng mặt, khoản này đủ cho gia đình bao lâu?`);
+if(nt==='y'&&!rid.has('bl'))cn.push('Chưa thấy giải pháp cho bệnh lý nghiêm trọng. Chi phí điều trị bệnh nặng thường kéo dài, và quan trọng hơn, thu nhập của bạn cũng bị gián đoạn trong lúc ấy.');
+if(has&&!F.health)cn.push('Chưa thấy thẻ chăm sóc sức khỏe hay bảo hiểm sức khỏe bổ sung. BHYT chỉ chi trả một phần; phần còn lại, nhất là khi điều trị ngoài tuyến hay dùng thuốc ngoài danh mục, vẫn do gia đình gánh.');
+if(has&&!F.acc)cn.push('Chưa thấy quyền lợi tai nạn. Tai nạn là loại rủi ro đến bất ngờ nhất, và người đi làm hằng ngày bằng xe máy thường đối mặt nhiều hơn mình nghĩ.');
+if(c.pct!=null&&c.pct>20)cn.push(`Tổng phí đang chiếm ${d1(c.pct)}% thu nhập năm. Bảo vệ tốt là bảo vệ bền: nếu một năm nào đó thu nhập chùng xuống mà phải bỏ ngang hợp đồng thì thật uổng công.`);
+if(F.noBen)cn.push('Có hợp đồng chưa ghi rõ người thụ hưởng. Chỉ là một dòng thông tin, nhưng nó quyết định tiền sẽ đến tay ai vào lúc khó khăn nhất.');
+if(S.st[1]==='n')cn.push('Bạn đang chưa có BHYT. Đây là lớp nền nên làm trước vì chi phí thấp mà tác dụng lớn.');
+if(g.no.length)cn.push(`Chính bạn đã đánh dấu “Còn lo” hoặc “Rất lo” ở: ${list(g.no.map(lc1))}. Những nỗi lo ta tự gọi tên thường đã nằm trong lòng từ lâu; nói ra được là đã nhẹ đi một nửa.`);
+if(g.u.length)cn.push(`Còn ${g.u.length} mục bạn chọn “Chưa rõ”. Không sao cả, chưa rõ nghĩa là còn có thể tìm hiểu.`);
+if(!cn.length)cn.push('Từ dữ liệu hiện có, chưa thấy khoảng trống nổi bật. Điều cần làm là giữ nhịp rà soát mỗi năm hoặc khi gia đình có thay đổi lớn như sinh con, mua nhà, đổi việc.');
+secs.push({t:'Những điều đáng dừng lại một chút',k:'l',p:cn.slice(0,6)});
+const sc=[];
+if(nK)sc.push(`Hãy thử hình dung một buổi tối bình thường: cả nhà quây quần, ${yg!=null&&yg<=12?'con ngồi làm bài bên cạnh':'con kể chuyện ở trường'}. Bảo hiểm không sinh ra để ta nghĩ chuyện buồn, mà để buổi tối ấy vẫn nguyên vẹn dù ngày mai có chuyện gì xảy ra: con vẫn đến trường, bếp vẫn đỏ lửa, người ở lại không phải vừa đau vừa lo tiền.`);
+else if(wed)sc.push('Với người đồng hành bên cạnh, câu hỏi không phải “mình có cần bảo hiểm không” mà là “nếu một trong hai ta gặp biến cố, người còn lại có phải gánh một mình cả nỗi đau lẫn khoản chi?”. Trò chuyện thẳng thắn về điều này là cách giữ cho tình nghĩa vợ chồng vững hơn.');
+else sc.push('Có thể hiện giờ bạn sống một mình hoặc chưa có gia đình riêng, nhưng hiếm ai thật sự một mình: cha mẹ, anh chị em, người thương đều đang tin vào sức khỏe và sự vững vàng của bạn. Chuẩn bị cho mình cũng là chuẩn bị để những người ấy không phải gồng gánh thay.');
+sc.push(pk(['Ông bà ta dạy “phòng bệnh hơn chữa bệnh”, “có an cư mới lạc nghiệp”. Bảo hiểm, nhìn cho đúng, là cách hiện đại để làm điều ông bà dặn: lo trước một chút để sau này khỏi hoảng.','Người Việt hay kiêng nói chuyện rủi ro vì sợ “nói gở”. Nhưng im lặng không làm rủi ro biến mất, chỉ làm gia đình thiếu chuẩn bị. Nhắc đến nó bình tĩnh, ngay lúc mọi thứ đang ổn, là cách yêu thương trưởng thành nhất.','“Tích cốc phòng cơ”: người xưa trữ lúa để qua mùa giáp hạt. Hợp đồng bảo hiểm cũng là một kho lúa như thế, ta mong không bao giờ phải mở, nhưng có nó, ta ngủ ngon hơn.','Người Việt có câu “của một đồng, công một nén”: điều đáng giữ không chỉ là tiền, mà là công sức bao năm vun vén. Bảo hiểm là cách giữ cho công sức ấy không bị một cơn gió làm đổ.','“Một cây làm chẳng nên non”: gánh nhà không thể chỉ dựa vào một người. Khi có lớp bảo vệ, cả nhà cùng được chia bớt gánh nặng, nhất là lúc người trụ cột cần nghỉ ngơi.'],1));
+if(ag&&ag>=30&&ag<=60)sc.push('Và nếu cha mẹ vẫn đang dựa vào bạn, chữ hiếu hôm nay không chỉ là những bữa cơm, mà còn là bảo đảm rằng khi bạn gặp khó, cha mẹ không phải lo thêm.');
+secs.push({t:'Khi nhìn bằng trái tim',k:'p',p:sc});
+const rf=[];
+if(nt==='n'||!lcN)rf.push(['“Bảo hiểm là tốn tiền”','“Bảo hiểm là cách mình giữ lời hứa với người thương, kể cả khi mình không thể có mặt”']);
+if(g.u.length||F.noBen)rf.push(['“Chắc là đủ rồi”','“Mình biết rõ mình đang có gì và sẽ nhận được gì”']);
+if(c.pct!=null&&c.pct>15)rf.push(['“Đóng thật nhiều cho yên tâm”','“Đủ dùng và vừa sức để giữ được lâu dài”']);
+if(nK||wed)rf.push(['“Chuyện xui thì đừng nhắc”','“Nhắc khi mọi thứ đang ổn để cả nhà cùng vững”']);
+rf.push(['“Để sau, khi dư dả”','“Bắt đầu từ một việc nhỏ trong tuần này”'],['“Có hợp đồng là xong”','“Có hợp đồng và biết rõ khi cần mình được nhận gì”']);
+secs.push({t:'Chuyển ngôn ngữ, đổi cách nghĩ',k:'rf',p:rf.slice(0,3)});
+const Q=[nK?`Khi ${yg!=null&&yg<=15?'con':'các con'} lớn lên và nhìn lại, bạn muốn con nhớ về cách mình đã lo cho con như thế nào?`:wed?'Nếu được hứa một điều với người đồng hành về sự bình an của hai người, lời hứa ấy là gì?':'Người bạn thương nhất lúc này là ai, và bạn muốn họ không phải lo điều gì khi bạn gặp khó khăn?','Khi nghĩ đến chuyện đau ốm hay biến cố, điều khiến bạn lo nhất là gì? Và nỗi lo ấy cho thấy bạn đang trân trọng điều gì?',nt==='n'||!lcN?'Điều gì đang khiến bạn chưa bắt đầu: chưa đúng thời điểm, chưa đủ tin, hay đang ưu tiên điều khác? Niềm tin nào đứng đằng sau lựa chọn đó?':'Trong những gì đang có, điều nào bạn thật sự hiểu rõ, và điều nào bạn giữ chỉ vì “người ta bảo nên có”?',pk(['Nếu thu nhập tháng này giảm một nửa, khoản bảo vệ nào bạn quyết giữ lại đầu tiên, và vì sao?','Nếu chỉ được chọn một rủi ro để yên tâm nhất trong năm nay, bạn chọn rủi ro nào? Điều gì làm bạn chọn như vậy?'],2),'Một việc nhỏ, làm được trong 7 ngày tới, để bạn tiến gần hơn đến sự an tâm là gì? Ai sẽ cùng làm hoặc nhắc bạn?'];
+const ac=[S.st[1]!=='y'?'Kiểm tra hoặc làm thẻ BHYT còn hiệu lực cho bản thân và các thành viên trong gia đình.':(bxOn()?'Mở VssID, xem quá trình đóng BHXH và mức lương làm căn cứ đóng có đúng không.':'Kiểm tra lại nơi đăng ký khám chữa bệnh ban đầu và thời hạn thẻ BHYT của cả gia đình.')];
+if(nt==='n'||!lcN)ac.push('Dành khoảng 30 phút trò chuyện với một tư vấn viên đáng tin để hiểu mức bảo vệ cơ bản phù hợp ngân sách. Bạn chưa cần quyết định ngay.');
+if(lcN)ac.push('Đọc lại điều khoản loại trừ, thời gian chờ và cập nhật người thụ hưởng của hợp đồng quan trọng nhất.');
+if(mult!=null&&mult<5&&kd)ac.push('Ngồi tính lại số tiền bảo hiểm cần có theo thu nhập, khoản nợ và số năm bạn muốn gia đình được an tâm.');
+if(lcN&&(!rid.has('bl')||!F.health))ac.push('Tìm hiểu thêm giải pháp cho bệnh lý nghiêm trọng và chi phí y tế, rồi so với ngân sách bạn có thể duy trì.');
+ac.push(nK||wed?'Dành 15 phút trò chuyện nhẹ nhàng với người thân về chuyện này, không cần kết luận ngay.':'Chọn một người bạn tin cậy để cùng rà soát lại hồ sơ bảo hiểm sau 3 tháng.');
+secs.push({t:'Ba việc cho 30 ngày tới',k:'ol',p:ac.slice(0,4)});
+secs.push({t:'Lời cuối',k:'p',p:[pk([`Gửi ${giv}, bảo vệ không phải là chạy theo nỗi sợ, mà là một cách yêu thương có kế hoạch. Bạn không cần làm hết trong một ngày, chỉ cần bước một bước nhỏ, đều đặn. Chúc bạn và gia đình luôn bình an và vững vàng.`,`${giv} thân mến, người biết nhìn lại mình thường là người đi xa được. Hôm nay bạn đã gieo một hạt giống an tâm; hãy tưới nó từng chút mỗi tháng. Mong bạn và những người thương luôn khoẻ mạnh, bình yên.`,`Cảm ơn ${giv} đã tin tưởng chia sẻ. Hãy nhớ rằng tự tin tài chính là một hành trình, và bạn đã đi qua chặng quan trọng nhất: bắt đầu. Chúc gia đình bạn thật nhiều sức khỏe và an nhiên.`,`Gửi ${giv}, hãy dịu dàng với chính mình: bạn đã làm được nhiều hơn bạn nghĩ. Việc còn lại chỉ là từng bước nhỏ, và bạn không phải đi một mình. Chúc bạn và gia đình một năm thật bình an, thật tự tin.`,`${giv} ơi, “tốt gỗ hơn tốt nước sơn”: sự bảo vệ thật sự nằm ở hiểu biết và chuẩn bị, không nằm ở số lượng hợp đồng. Chúc bạn giữ được sự vững vàng ấy cùng những người thương.`],3),'Bản đọc này được tạo từ chính dữ liệu bạn nhập, mang tính định hướng và không thay thế tư vấn chuyên môn.']});
+const text=secs.map(x=>x.t+'\n'+(x.k==='rf'?x.p.map(r=>r[0]+' → '+r[1]):x.p).join('\n')).join('\n\n');
+return{secs,Q,text}}
+
+
+const bxOn=()=>G('p.bx')==='y',BXI=[0,2,3];
+const BXQ=()=>`<div class="choice"><button type="button" class="${G('p.bx')==='y'?'on':''}" onclick="setv('p.bx','y')"><span class="ck1">✓</span><b>Có</b><small>Đang tham gia BHXH</small></button><button type="button" class="${G('p.bx')==='n'?'on sn':''}" onclick="setv('p.bx','n')"><span class="ck1">–</span><b>Không</b><small>Chưa tham gia BHXH</small></button></div>`;
+
+const d1=x=>(+x).toFixed(1).replace('.',',');
+const PRN={vh:'Rất cao',h:'Cao',m:'Vừa',l:'Thấp',n:'Chưa cần'};
+const SV={ok:100,mid:72,u:45,no:28,hi:10},PAL=['#1f7a6d','#b98a2b','#3fa7d6','#d1633f','#7a5bb5','#5aa469','#c24d86','#8a949a'];
+const AREAS=[['Thu nhập – tử vong',[0,1,2]],['Chi phí y tế',[3,4,5,8]],['Bệnh hiểm nghèo',[6]],['Tai nạn',[7]],['Người thân – hưu trí',[9,10]],['Nhà – xe – nghề',[11,12,13]]];
+function areaScores(){const F=fx();return AREAS.map(([n,ix],k)=>{const v=ix.map(i=>SV[G(`gp.${i}.s`)]).filter(x=>x!=null);let sc=v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null;
+if(sc==null){let d=null;const h=F.nt==='y'||F.npN>0,np=t=>F.npT.has(t);if(k===0&&F.mult!=null)d=Math.min(100,Math.round(F.mult/10*100));if(k===1&&h)d=F.health?70:25;if(k===2&&F.nt==='y')d=F.rid.has('bl')?70:20;if(k===3&&h)d=F.acc?70:20;if(k===5&&F.npN)d=(np('Nhà ở / tài sản')||np('Cháy nổ')||np('Xe – TNDS bắt buộc')||np('Vật chất xe'))?65:25;sc=d}
+return{n,sc}})}
+function radarSVG(a){const cx=190,cy=150,R=72,n=a.length,pt=(i,r)=>{const t=-Math.PI/2+i*2*Math.PI/n;return[cx+r*Math.cos(t),cy+r*Math.sin(t)]},f1=v=>v.toFixed(1),ring=f=>a.map((_,i)=>pt(i,R*f).map(f1).join(',')).join(' ');
+let g=[.25,.5,.75,1].map(f=>`<polygon points="${ring(f)}" class="rg"/>`).join('')+a.map((_,i)=>{const[x,y]=pt(i,R);return`<line x1="${cx}" y1="${cy}" x2="${f1(x)}" y2="${f1(y)}" class="rg"/>`}).join('');
+const has=a.some(x=>x.sc!=null);
+if(has)g+=`<polygon points="${a.map((x,i)=>pt(i,R*((x.sc||0)/100)).map(f1).join(',')).join(' ')}" class="rp"/>`+a.map((x,i)=>{if(x.sc==null)return'';const[X,Y]=pt(i,R*x.sc/100);return`<circle cx="${f1(X)}" cy="${f1(Y)}" r="4" class="rd"/>`}).join('');
+g+=a.map((x,i)=>{const[X,Y]=pt(i,R+18),an=Math.abs(X-cx)<6?'middle':X<cx?'end':'start',y=Y+(i===0?-10:i===3?8:-2);return`<text x="${f1(X)}" y="${f1(y)}" text-anchor="${an}" class="rt">${esc(x.n)}<tspan x="${f1(X)}" dy="12" class="rs">${x.sc==null?'chưa đánh giá':x.sc+'/100'}</tspan></text>`}).join('');
+return`<svg viewBox="0 0 380 300" role="img" aria-label="Biểu đồ mạng nhện: mức bảo vệ theo 6 vùng">${g}</svg>`}
+function donutHTML(){const c=cost(),rows=c.rows.filter(r=>r[1]>0),tot=c.tot,C=2*Math.PI*60;let off=0;
+const segs=rows.map((r,i)=>{const L=C*r[1]/tot,t=`<circle r="60" cx="90" cy="90" fill="none" stroke="${PAL[i%PAL.length]}" stroke-width="26" stroke-dasharray="${L.toFixed(2)} ${(C-L).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 90 90)"/>`;off+=L;return t}).join('');
+const ring=tot?segs:`<circle r="60" cx="90" cy="90" fill="none" stroke="#d8e2df" stroke-width="26"/>`;
+const mid=tot?`<text x="90" y="92" text-anchor="middle" class="dc1">${d1(tot/1e6)} tr</text><text x="90" y="108" text-anchor="middle" class="dc2">đồng/năm</text>`:`<text x="90" y="95" text-anchor="middle" class="dc2">Chưa có phí</text>`;
+const lg=tot?`<ul class="lg">${rows.map((r,i)=>`<li><i style="background:${PAL[i%PAL.length]}"></i><span>${esc(r[0])}</span><b>${Math.round(r[1]/tot*100)}%</b></li>`).join('')}</ul>`:'';
+return`<div class="dn"><svg viewBox="0 0 180 180" role="img" aria-label="Biểu đồ tròn: cơ cấu phí bảo hiểm mỗi năm">${ring}${mid}</svg>${lg}</div>`}
+function gaugeSVG(){const m=fx().mult,X=v=>(10+320*Math.min(v,15)/15).toFixed(1),mk=m!=null?`<path d="M${X(m)} 52 l-7 -12 h14z" fill="#0c2b2e"/><text x="${Math.min(Math.max(+X(m),60),280)}" y="30" text-anchor="middle" class="sv-b">${d1(m)}× thu nhập năm</text>`:`<text x="170" y="30" text-anchor="middle" class="sv-m">Nhập thu nhập và số tiền bảo hiểm chính để xem</text>`;
+return`<svg viewBox="0 0 340 100" role="img" aria-label="Thang đo số tiền bảo hiểm so với thu nhập năm"><rect x="10" y="54" width="107" height="16" fill="#e9b3a4" rx="8"/><rect x="100" y="54" width="17" height="16" fill="#e9b3a4"/><rect x="117" y="54" width="107" height="16" fill="#f0d98c"/><rect x="224" y="54" width="106" height="16" fill="#8fd0c1" rx="8"/><rect x="224" y="54" width="14" height="16" fill="#8fd0c1"/>${mk}<text x="10" y="88" class="sv-m">0</text><text x="117" y="88" text-anchor="middle" class="sv-m">5×</text><text x="224" y="88" text-anchor="middle" class="sv-m">10×</text><text x="330" y="88" text-anchor="end" class="sv-m">15×+</text></svg>`}
+function caps(a){const F=fx(),c=F.c,sc=a.filter(x=>x.sc!=null).sort((x,y)=>y.sc-x.sc),rows=c.rows.filter(r=>r[1]>0).sort((x,y)=>y[1]-x[1]);
+const c1=sc.length>=2?`Vùng vững nhất của bạn hiện là “${sc[0].n}” (${sc[0].sc}/100). Vùng đáng chăm thêm là “${sc[sc.length-1].n}” (${sc[sc.length-1].sc}/100). Điểm được lấy từ các mục bạn chọn ở phần Khoảng trống và dữ liệu hợp đồng, mang tính định hướng.`:sc.length===1?`Bạn mới đánh giá được vùng “${sc[0].n}”. Hoàn thành thêm mục Khoảng trống để bản đồ này đầy đặn hơn.`:'Hãy hoàn thành mục Khoảng trống để bản đồ này hiện đầy đủ. Vùng càng phủ rộng, bạn càng được che chở đều.';
+const c2=c.tot?`Trong ${fmt(c.tot)} đ phí mỗi năm, “${rows[0][0]}” chiếm nhiều nhất (${Math.round(rows[0][1]/c.tot*100)}%).`+(c.pct!=null?` Tổng phí bằng ${d1(c.pct)}% thu nhập năm của bạn.`:''):'Nhập phí ở các mục trước để thấy mỗi đồng phí đang đi về đâu.';
+const c3=F.mult!=null?`Số tiền bảo hiểm chính của bạn bằng khoảng ${d1(F.mult)} lần thu nhập năm. Vùng vàng 5–10 lần là mốc tham khảo thường dùng; nếu còn người phụ thuộc hoặc khoản nợ, bạn nên cân nhắc cao hơn.`:'Nhập thu nhập và số tiền bảo hiểm chính để xem biểu đồ này.';
+return[c1,c2,c3]}
+function chartsHTML(){const a=areaScores(),cp=caps(a);return`<div class="chart"><h4>🛡️ 1. Bản đồ bảo vệ của bạn</h4>${radarSVG(a)}<p class="cap">${esc(cp[0])}</p></div><div class="chart"><h4>🍩 2. Mỗi đồng phí đang đi về đâu</h4>${donutHTML()}<p class="cap">${esc(cp[1])}</p></div><div class="chart"><h4>🎯 3. Số tiền bảo vệ so với thu nhập</h4>${gaugeSVG()}<p class="cap">${esc(cp[2])}</p></div>`}
+const heroSVG=()=>`<svg class="hero-svg" viewBox="0 0 360 170" role="img" aria-label="Mái ấm được che chở dưới chiếc ô bình an"><defs><linearGradient id="hg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14464a"/><stop offset="1" stop-color="#1f7a6d"/></linearGradient><linearGradient id="hg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efcc78"/><stop offset="1" stop-color="#b98a2b"/></linearGradient></defs><rect width="360" height="170" rx="16" fill="url(#hg1)"/><circle cx="312" cy="36" r="30" fill="#f3d98b" opacity=".16"/><circle cx="312" cy="36" r="17" fill="#f3d98b"/><circle cx="46" cy="30" r="2" fill="#fff" opacity=".8"/><circle cx="84" cy="18" r="1.5" fill="#fff" opacity=".7"/><circle cx="30" cy="62" r="1.5" fill="#fff" opacity=".6"/><circle cx="130" cy="34" r="1.5" fill="#fff" opacity=".6"/><path d="M0 146 Q90 124 180 140 T360 130 V170 H0Z" fill="#0c2b2e" opacity=".6"/><path d="M70 84 A110 66 0 0 1 290 84 Q272 72 253 84 Q235 72 217 84 Q198 72 180 84 Q162 72 143 84 Q125 72 107 84 Q88 72 70 84Z" fill="url(#hg2)"/><circle cx="180" cy="17" r="4" fill="#e8c36a"/><rect x="152" y="118" width="56" height="32" rx="2" fill="#f6efe0"/><path d="M144 120 L180 98 L216 120Z" fill="#d1633f"/><rect x="172" y="132" width="16" height="18" rx="2" fill="#14464a"/><path d="M180 131 c-5 -6 -14 -1 -9 5 l9 8 l9 -8 c5 -6 -4 -11 -9 -5z" fill="#d1633f" transform="translate(0 -14) scale(1)"/><circle cx="100" cy="112" r="7" fill="#f6efe0"/><rect x="91" y="121" width="18" height="29" rx="8" fill="#f6efe0"/><circle cx="124" cy="127" r="5" fill="#e8c36a"/><rect x="118" y="133" width="12" height="17" rx="6" fill="#e8c36a"/><circle cx="260" cy="112" r="7" fill="#f6efe0"/><rect x="251" y="121" width="18" height="29" rx="8" fill="#f6efe0"/><circle cx="236" cy="127" r="5" fill="#e8c36a"/><rect x="230" y="133" width="12" height="17" rx="6" fill="#e8c36a"/></svg>`;
+const SI=['','🧭','🌱','🔎','❤️','🔄','✅','🌸'],MOT=['Bình an của mình là mái nhà của người thương.','Lo xa một chút để người thương được yên lòng.','Giữ gìn hôm nay, để ngày mai vẫn còn nụ cười.','Thương mình, thương nhà, thương cả ngày mai.'];
+function secHTML(x,i){const E=esc;let b;if(x.k==='l')b=`<ul>${x.p.map(t=>`<li>${E(t)}</li>`).join('')}</ul>`;else if(x.k==='ol')b=`<ol>${x.p.map(t=>`<li>${E(t)}</li>`).join('')}</ol>`;else if(x.k==='rf')b=x.p.map(r=>`<div class="rf"><s>${E(r[0])}</s><b>${E(r[1])}</b></div>`).join('');else b=x.p.map(t=>`<p>${E(t)}</p>`).join('');return`<section class="sc"><h3>${SI[i]?SI[i]+' ':''}${E(x.t)}</h3>${b}</section>`}
+function storyHTML(st){const E=esc,H=hash(S.id||'x'),f=st.secs[0];
+let h=`<section class="sc hs">${heroSVG()}<h3>💌 ${E(f.t)}</h3>${f.p.map(t=>`<p>${E(t)}</p>`).join('')}<p class="motto">“${MOT[H%MOT.length]}”</p></section><section class="sc"><h3>📊 Ba bức tranh về bạn</h3>${chartsHTML()}</section>`;
+st.secs.slice(1).forEach((x,j)=>{h+=secHTML(x,j+1);if(x.k==='rf')h+=`<section class="sc q"><h3>🪞 Câu hỏi khai vấn dành riêng cho bạn</h3><p style="color:var(--mute)">Không có đáp án đúng hay sai. Hãy đọc chậm, hít một hơi thật sâu và viết điều đầu tiên đến trong lòng.</p>${st.Q.map((q,i)=>`<label class="f"><span>${i+1}. ${E(q)}</span><textarea data-b="cp.cq${i}" placeholder="Viết vài dòng cho riêng bạn…">${E(S.cp['cq'+i]||'')}</textarea></label>`).join('')}</section>`});return h}
+function buildReport(){const F=fx(),p=S.p,st=story(),E=esc,tb=(rows,head,cls='')=>`<table class="pr-t ${cls}">${head?`<thead><tr>${head.map(h=>`<th>${E(h)}</th>`).join('')}</tr></thead>`:''}<tbody>${rows.map(r=>`<tr>${r.map(x=>`<td>${E(x)}</td>`).join('')}</tr>`).join('')}</tbody></table>`,kv=a=>tb(a.filter(r=>r[1]!==''&&r[1]!=null)),m=v=>fmt(num(v))+' đ',on=bxOn(),dt=p.dob?p.dob.split('-').reverse().join('/'):'';
+const sec=(t,b)=>`<section class="pr-s"><h2>${t}</h2>${b}</section>`,tn={y:'Đang có',n:'Chưa',u:'Chưa rõ'},ck=g=>`<h3>${E(CKT[g])}</h3><ul class="pr-ck">${CK[g].map((t,i)=>`<li>${S.ck[g+i]?'☑':'☐'} ${E(t)}</li>`).join('')}</ul>`;
+let h=`<div class="pr-h"><small>Hệ Sinh Thái Bảo Hiểm</small><h1>Kiểm tra và tối ưu hoá các quyền lợi bảo hiểm</h1><p>Dành cho: <b>${E(p.name||'…')}</b> · Ngày lập: ${new Date().toLocaleDateString('vi-VN')} · Tự Tin Tài Chính – KHAI MINH</p><p style="margin-top:6px;font-size:9pt;color:#9fbcb8">Tài liệu được tạo từ chính thông tin bạn đã nhập, mang tính định hướng và không thay thế hợp đồng, điều khoản bảo hiểm hay tư vấn chuyên môn.</p></div>`;
+h+=sec('1. Thông tin chung',kv([['Họ và tên',p.name||''],['Ngày sinh',dt+(F.age!==''?` (${F.age} tuổi)`:'')],['Giới tính',p.gender||''],['Nghề nghiệp',F.job],['Điện thoại',p.phone||''],['Địa chỉ',p.addr||''],['Nơi làm việc',p.work||''],['Thu nhập bình quân/tháng',p.income?m(p.income):''],['Lương bình quân/tháng',p.salary?m(p.salary):''],['Tình trạng hôn nhân',F.mar],['Con cái',F.nK?`${F.nK} con. ${kidsStr()}`:p.kid==='n'?'Chưa có con':''],['Người phụ thuộc',p.dep||''],['Nhóm lao động',GRP[p.grp]||''],['Tham gia BHXH',({y:'Có',n:'Không'})[p.bx]||'']]));
+h+=sec('2. BHXH – BHYT và bảo hiểm khác',tb(ST.map((t,i)=>[t,tn[S.st[i]]||'—']).filter((r,i)=>on||!BXI.includes(i)),['Loại bảo hiểm','Tình trạng'],'w')+kv([...(on?[['Thời gian đã đóng BHXH',G('cp.xh_time')||''],['Mức lương đóng BHXH',G('cp.xh_sal')?m(G('cp.xh_sal')):''],['Dự kiến đủ điều kiện hưu',G('cp.xh_ret')||'']]:[]),['Mức hưởng ghi trên thẻ BHYT',G('cp.yt_lv')||''],['Nơi đăng ký KCB ban đầu',G('cp.yt_hos')||''],['Thời hạn thẻ BHYT',G('cp.yt_exp')||'']]));
+if(S.np.length)h+=sec('3. Bảo hiểm phi nhân thọ',tb(S.np.map((r,i)=>[i+1,r.t||'',r.co||'',r.pr||'',r.lim?m(r.lim):'',r.fee?m(r.fee):'',r.term||'']),['#','Loại','Công ty','Sản phẩm','Hạn mức','Phí/năm','Thời hạn'],'w'));
+let nt=`<p>${p.nt==='n'?'Chưa tham gia bảo hiểm nhân thọ.'+(p.ntn?' '+E(p.ntn):''):p.nt==='y'?'':'Chưa trả lời.'}</p>`;
+if(p.nt==='y')nt=S.lc.map((x,i)=>{const rd=[];RD.forEach(([k,t])=>{const r=x.r?.[k];if(r?.on)rd.push([t,r.lim?m(r.lim):'',r.fee?m(r.fee):'',r.term||'',r.note||''])});(x.x||[]).forEach(z=>rd.push([z.name||'Quyền lợi khác',z.lim?m(z.lim):'',z.fee?m(z.fee):'',z.term||'',z.note||'']));return`<h3>Hợp đồng ${i+1}: ${E(x.co||'')} ${E(x.pr||'')}</h3>`+kv(MAIN.map(([k,l,ty])=>[l.replace(/ \(đ\)$/,''),ty==='m'?(x[k]!==undefined&&x[k]!==''?m(x[k]):''):(x[k]||'')]))+(rd.length?tb(rd,['Giải pháp đính kèm','Hạn mức','Phí/năm','Thời hạn','Chi tiết'],'w'):'<p>Chưa ghi giải pháp đính kèm.</p>')+`<p><b>Tổng phí hợp đồng:</b> ${m(num(x.fee)+lcRF(x))}/năm</p>`}).join('');
+h+=sec('4. Bảo hiểm nhân thọ',nt);
+h+=sec('5. Chi phí bảo hiểm',tb([...F.c.rows.map(r=>[r[0],m(r[1])]),['TỔNG CHI PHÍ/NĂM',m(F.c.tot)],...(F.c.pct!=null?[['Tỷ lệ trên thu nhập năm',d1(F.c.pct)+'%']]:[])],['Khoản phí','Phí/năm'],'w'));
+h+=sec('6. Ba biểu đồ về bạn',chartsHTML());
+h+=sec('7. Khoảng trống bảo vệ',tb(GP.map((t,i)=>{const g=S.gp[i]||{};return[t,{ok:'😌 Yên tâm',mid:'🙂 Tạm ổn',u:'🤔 Chưa rõ',no:'😟 Còn lo',hi:'😰 Rất lo'}[g.s]||'—',g.have||'',g.need||'']}),['Hạng mục','Đánh giá','Điều đang có','Điều mong muốn'],'w'));
+h+=sec('8. Lời nhắn dành riêng cho bạn',`${heroSVG()}`+st.secs.map((x,i)=>i===0?`<section class="sc"><h3>💌 ${E(x.t)}</h3>${x.p.map(t=>`<p>${E(t)}</p>`).join('')}</section>`:secHTML(x,i)).join(''));
+h+=sec('9. Câu hỏi khai vấn và câu trả lời của bạn',st.Q.map((q,i)=>`<div class="pr-q">${i+1}. ${E(q)}</div><div class="pr-ans">${E(S.cp['cq'+i]||'')}</div>`).join(''));
+h+=sec('10. Kế hoạch hoàn thiện',tb(PL.map((t,i)=>{const q=S.pl[i]||{};return[t,PRN[q.pr]||'—',q.when||'',q.who||'']}),['Việc cần làm','Ưu tiên','Thời gian','Phụ trách'],'w'));
+h+=sec('11. Bảng kiểm tra',Object.keys(CK).filter(g=>g!=='bhxh'||on).map(ck).join(''));
+let e=$('#pr');if(!e){e=document.createElement('div');e.id='pr';document.body.appendChild(e)}e.innerHTML=h}
+const T0=document.title;
+function pdfTitle(){const n=(S.p.name||'').trim();return(n?n+' - ':'')+'Kiểm tra quyền lợi bảo hiểm'}
+function exportPDF(){if(/zalo|fban|fbav|instagram|line\//i.test(navigator.userAgent))alert('Trình duyệt trong Zalo/Facebook có thể không lưu được PDF. Hãy bấm menu ⋮ rồi chọn “Mở bằng trình duyệt” (Chrome/Safari) để xuất PDF.');buildReport();document.title=pdfTitle();setTimeout(()=>window.print(),120)}
+addEventListener('beforeprint',()=>{buildReport();document.title=pdfTitle()});addEventListener('afterprint',()=>{document.title=T0});
+
+function advisor(){const F=fx(),{c,g,p}=F,kd=F.nK>0||F.dep>0,hasNT=F.nt==='y'&&F.lcN>0,has=F.nt==='y'||F.npN>0;let sc=0;const wr=[];
+if(F.nt==='n'){sc+=3+(kd?1:0);wr.push('Chưa có nhân thọ'+(kd?' dù có người phụ thuộc':''))}
+if(hasNT&&F.mult!=null&&F.mult<5&&kd){sc+=2;wr.push(`STBH chỉ ${d1(F.mult)} lần thu nhập năm`)}
+if(F.nt==='y'&&!F.rid.has('bl')){sc++;wr.push('Thiếu bệnh lý nghiêm trọng')}
+if(has&&!F.health){sc++;wr.push('Thiếu bảo hiểm sức khỏe')}
+if(has&&!F.acc){sc++;wr.push('Thiếu tai nạn')}
+if(g.hi.length){sc++;wr.push('Rất lo: '+g.hi.map(lc1).join(', '))}
+if(g.no.length>=3)sc+=2;else if(g.no.length>=1)sc++;
+if(g.no.length>g.hi.length)wr.push(`Còn lo ${g.no.length} mục`);
+if(c.pct!=null&&c.pct>20){sc++;wr.push(`Phí ${d1(c.pct)}% thu nhập (cao)`)}
+if(F.noBen){sc++;wr.push('Chưa ghi người thụ hưởng')}
+const enough=!!(F.nm&&(F.nt||F.npN||Object.keys(S.gp).length)),lv=!enough?'Chưa đủ dữ liệu':sc>=5?'Cao':sc>=3?'Vừa':'Thấp',ky=F.yg!=null&&F.yg<=12;
+const st=[F.lcN?`${F.lcN} HĐ nhân thọ`:'',F.rid.size?`${F.rid.size} giải pháp đính kèm`:'',F.mult!=null&&F.mult>=5?'STBH đạt vùng tham khảo':'',S.st[1]==='y'?'Có BHYT':''].filter(Boolean).join('; ');
+const op=!enough?'Mời khách hoàn thành hồ sơ trước khi tư vấn.':F.nt==='n'?(kd?`Mở đầu bằng người đang dựa vào khách${ky?` (con nhỏ nhất ${F.yg} tuổi)`:''}; hỏi: “Nếu anh/chị vắng mặt một thời gian, gia đình xoay xở thế nào?”`:'Hỏi về dự định và điều khiến khách chưa bắt đầu, chưa bán sản phẩm ngay.'):(F.mult!=null&&F.mult<5&&kd?'Rà lại số tiền bảo hiểm so với trách nhiệm gia đình trước khi nói đến sản phẩm mới.':(F.nt==='y'&&!F.rid.has('bl')?'Ghi nhận việc khách đã có hợp đồng, rồi gợi mở về chi phí điều trị bệnh nặng và thu nhập bị gián đoạn.':'Ghi nhận những gì khách đã làm tốt, hẹn rà soát định kỳ và hỏi về thay đổi sắp tới của gia đình.'));
+const kq=[0,1,2,3,4].map(i=>(S.cp['cq'+i]||'').trim()).find(Boolean)||'';
+return{lv,sc,row:[lv,sc,p.phone||'',F.age,F.job,num(p.income),F.mar+(F.nK?`, ${F.nK} con`+(F.ks.length?` (${F.ks.join(', ')} tuổi)`:''):''),F.dep||'',({y:'Có',n:'Không'})[p.bx]||'Chưa trả lời',F.nt==='y'?'Đã tham gia':F.nt==='n'?'Chưa tham gia':'Chưa trả lời',F.lcN,F.sumDeath,F.mult!=null?+F.mult.toFixed(1):'',c.tot,c.pct==null?'':+c.pct.toFixed(1),F.rid.has('hs')?'Có':'Chưa',F.rid.has('tc')?'Có':'Chưa',F.rid.has('bl')?'Có':'Chưa',F.acc?'Có':'Chưa',F.rid.has('mp')?'Có':'Chưa',g.no.map(lc1).join('; '),g.hi.map(lc1).join('; '),wr.join(' | '),st,op,kq.slice(0,200),F.nt==='n'?String(p.ntn||'').slice(0,200):'',new Date().toLocaleString('vi-VN')]}}
+const ADV_H=['Ưu tiên tư vấn','Điểm','Điện thoại','Tuổi','Nghề nghiệp','Thu nhập/tháng','Gia đình','Người phụ thuộc','Tham gia BHXH','Nhân thọ','Số HĐ nhân thọ','Tổng STBH chính','STBH/thu nhập (lần)','Tổng phí BH/năm','% thu nhập','Thẻ sức khỏe','Trợ cấp nằm viện','Bệnh lý nghiêm trọng','Tai nạn','Miễn đóng phí','Mục còn lo','Mục rất lo','Điểm cần chú ý','Điểm mạnh','Gợi ý mở lời','Khai vấn nổi bật','Lý do chưa tham gia NT','Cập nhật lúc'];
+const STEPS=[
+['Hồ sơ',()=>`<h2>Thông tin cá nhân và gia đình</h2><p class="sub">Chọn nhanh bằng nút bấm. Mọi thông tin tự lưu và tự gửi về Google Sheet, bạn không cần bấm gửi.</p>
+<div class="c"><h3>Thông tin cơ bản</h3><div class="g">${I('p.name','Họ và tên')}${I('p.dob','Ngày sinh',{t:'date'})}<label class="f"><span>Tuổi (tự tính)</span><input id="age" readonly value="${esc(age(G('p.dob'))||'')}"></label>${I('p.phone','Điện thoại')}${I('p.addr','Địa chỉ cư trú')}${I('p.work','Nơi làm việc')}</div><p class="hint" id="phh"></p><p class="hint" id="dbh"></p><div class="f" style="margin-top:12px"><span>Giới tính</span></div>${SG('p.gender',[['Nam','Nam'],['Nữ','Nữ'],['Khác','Khác']])}</div>
+<div class="c"><h3>Nghề nghiệp</h3><label class="f"><select data-b="p.job"><option value="">Chọn nghề nghiệp</option>${JOBS.map(t=>`<option ${G('p.job')==t?'selected':''}>${t}</option>`).join('')}<option value="__other" ${G('p.job')==='__other'?'selected':''}>Nghề khác (tự điền)</option></select></label>${G('p.job')==='__other'?`<div style="margin-top:8px">${I('p.job2','Nhập nghề của bạn')}</div>`:''}<div class="g" style="margin-top:10px">${I('p.income','Thu nhập bình quân/tháng (đ)',{m:1})}${I('p.salary','Lương bình quân/tháng (đ)',{m:1})}</div></div>
+<div class="c"><h3>Gia đình</h3><div class="f"><span>Tình trạng hôn nhân</span></div>${SG('p.mar',[['Độc thân','Độc thân'],['Đã kết hôn','Đã kết hôn'],['Khác','Khác']])}${G('p.mar')==='Khác'?`<div style="margin-top:8px">${I('p.mar2','Ghi rõ (ly hôn, góa…)')}</div>`:''}<div class="f" style="margin-top:12px"><span>Đã có con chưa?</span></div>${SG('p.kid',[['y','Đã có con'],['n','Chưa có con']],['','n'])}${G('p.kid')==='y'?`<div class="g" style="margin-top:10px">${I('p.nk','Số con',{t:'number'})}</div><div class="g" id="kids" style="margin-top:8px">${kidsH()}</div>`:''}<div class="g" style="margin-top:10px">${I('p.dep','Số người phụ thuộc tài chính',{t:'number'})}</div></div>
+<div class="c"><h3>Bạn có đang tham gia bảo hiểm xã hội không?</h3><p class="sub" style="margin:0 0 10px">Nếu chọn Có, các mục liên quan đến BHXH sẽ hiện ra ở mục 2. Nếu chọn Không, các mục ấy sẽ được ẩn.</p>${BXQ()}</div><div class="c"><h3>Bạn thuộc nhóm lao động nào?</h3>${SG('p.grp',GRP.map((t,i)=>[''+i,t]))}</div>`],
+['BHXH · BHYT',()=>{const on=bxOn(),bx=G('p.bx');return `<p class="sub">Nền tảng an sinh của bạn. Chạm để chọn tình trạng từng loại.</p><div class="c"><h3>Bạn có đang tham gia bảo hiểm xã hội không?</h3>${BXQ()}</div>${on?'':bx==='n'?'<p class="tip">Bạn chưa tham gia BHXH nên các mục liên quan đã được ẩn. Bạn vẫn có thể kê BHYT và các bảo hiểm khác bên dưới.</p>':'<p class="tip">Chọn Có hoặc Không để tiếp tục. Các mục BHXH sẽ hiện ra khi bạn chọn Có.</p>'}<div class="c"><h3>Tình trạng tham gia</h3>${ST.map((t,i)=>BXI.includes(i)&&!on?'':`<div class="row"><span>${t}</span>${SG('st.'+i,[['y','Đang có'],['n','Chưa'],['u','Chưa rõ']],['','n','u'])}</div>`).join('')}</div>${on?`<div class="c"><h3>Chi tiết BHXH</h3><div class="g">${I('cp.xh_time','Tổng thời gian đã đóng')}${I('cp.xh_sal','Mức lương đóng BHXH (đ)',{m:1})}${I('cp.xh_ret','Dự kiến đủ điều kiện hưu')}</div></div>`:''}<div class="c"><h3>Chi tiết BHYT</h3><div class="g">${I('cp.yt_lv','Mức hưởng ghi trên thẻ')}${I('cp.yt_hos','Nơi đăng ký KCB ban đầu')}${I('cp.yt_exp','Thời hạn thẻ')}</div></div>${on?CHK('bhxh'):''}${CHK('bhyt')}`}],
+['Phi nhân thọ',()=>`<h2>Bảo hiểm phi nhân thọ</h2><p class="sub">Mỗi hợp đồng một dòng: ghi công ty, sản phẩm, hạn mức, phí và thời hạn.</p>${S.np.map((r,i)=>`<div class="c"><div class="row" style="border:0;padding-top:0"><b>Hợp đồng ${i+1}</b><button class="btn x" onclick="del('np',${i})">Xóa</button></div><label class="f"><span>Loại</span><select data-b="np.${i}.t"><option value="">Chọn loại</option>${NP.map(t=>`<option ${r.t==t?'selected':''}>${t}</option>`).join('')}</select></label><div class="g" style="margin-top:8px">${I(`np.${i}.co`,'Công ty bảo hiểm')}${I(`np.${i}.pr`,'Tên sản phẩm')}${I(`np.${i}.lim`,'Hạn mức / số tiền bảo hiểm',{m:1})}${I(`np.${i}.fee`,'Phí đóng/năm (đ)',{m:1})}${I(`np.${i}.term`,'Thời hạn')}</div></div>`).join('')||'<p class="tip">Chưa có hợp đồng nào. Nếu bạn chưa có, bỏ qua bước này.</p>'}<button class="btn g2" onclick="add('np')">+ Thêm hợp đồng phi nhân thọ</button><div style="margin-top:12px">${CHK('pnt')}</div>`],
+['Nhân thọ',()=>{const n=G('p.nt');let b='<p class="tip">Chọn một trong hai ô trên để bắt đầu.</p>';
+if(n==='n')b=`<div class="c"><h3>Lý do hoặc dự định</h3><label class="f"><span>Không bắt buộc</span><textarea data-b="p.ntn">${esc(G('p.ntn')||'')}</textarea></label></div>`;
+else if(n==='y')b=`<div class="strip" id="bs"></div>`+S.lc.map(lcCard).join('')+`<button class="btn g2 wide" type="button" onclick="add('lc')">+ Thêm hợp đồng nhân thọ</button>`;
+return `<p class="sub">Tách riêng phí sản phẩm chính và phí từng giải pháp đính kèm, để biết mỗi đồng phí đang mua loại bảo vệ nào.</p><div class="choice"><button type="button" class="${n==='y'?'on':''}" onclick="pickNT('y')"><span class="ck1">✓</span><b>Đã tham gia</b><small>Kê hợp đồng, quyền lợi, phí</small></button><button type="button" class="${n==='n'?'on sn':''}" onclick="pickNT('n')"><span class="ck1">–</span><b>Chưa tham gia</b><small>Ghi lý do hoặc dự định</small></button></div>${b}<div style="margin-top:12px">${CHK('nt')}${CHK('bt')}</div>`}],
+['Chi phí',()=>`<h2>Tổng hợp chi phí bảo hiểm</h2><p class="sub">Tự cộng từ các bước trước. Phần BHXH, BHYT, BHTN bắt buộc do doanh nghiệp đóng thì ghi riêng, đừng cộng vào chi tiêu cá nhân.</p><div class="c"><div class="g">${bxOn()?I('cp.xh_m','BHXH tự nguyện (đ/tháng, app tự nhân 12)',{m:1}):''}${I('cp.yt_m','BHYT tự đóng (đ/năm)',{m:1})}</div></div><div class="c" id="ct"></div><div id="ci"></div>`],
+['Khoảng trống',()=>`<p class="sub">Không có đúng hay sai. Hãy thành thật với chính mình: nếu chuyện không may xảy ra, chỗ nào bạn thấy yên tâm, chỗ nào còn lo? Mỗi câu chỉ cần chạm một ô. Câu nào chưa muốn trả lời, bạn cứ bỏ qua.</p>${GP.map((t,i)=>{const sv=G(`gp.${i}.s`),h=gapHint(i);return `<div class="gc${sv?' g-'+sv:''}"><div class="gt"><b>${t}</b></div><p class="gq">${GQ[i]}</p>${h?`<p class="gh">💡 ${h}</p>`:''}<div class="gs">${[['ok','😌','Yên tâm'],['mid','🙂','Tạm ổn'],['u','🤔','Chưa rõ'],['no','😟','Còn lo'],['hi','😰','Rất lo']].map(([v,e,l])=>`<button type="button" class="${sv===v?'on s-'+v:''}" onclick="setv('gp.${i}.s','${v}')"><span>${e}</span>${l}</button>`).join('')}</div><details><summary>Ghi chú thêm (không bắt buộc)</summary><div><div class="g">${I(`gp.${i}.have`,'Điều bạn đang có')}${I(`gp.${i}.need`,'Điều bạn mong muốn')}</div></div></details></div>`}).join('')}${CHK('ql')}`],
+['Kết luận',()=>{const st=story();window._st=st.text;return `<p class="sub">Lời nhắn này được viết riêng từ dữ liệu của bạn. Mỗi người một bản khác nhau.</p>${(S.p.name||'').trim()?'':'<p class="tip">Hãy nhập họ tên ở mục 1 để file PDF và bản kết luận mang đúng tên bạn.</p>'}<button class="btn pdf wide" type="button" onclick="exportPDF()">📄 Xuất PDF đầy đủ thông tin</button><article class="story">${storyHTML(st)}</article><div class="c"><h3>🗓️ Kế hoạch hoàn thiện</h3>${PL.map((t,i)=>`<div class="c" style="background:var(--inp);margin-bottom:8px"><b>${t}</b><div style="margin:6px 0">${SG('pl.'+i+'.pr',[['vh','Rất cao'],['h','Cao'],['m','Vừa'],['l','Thấp'],['n','Chưa cần']],['n','n','u','',''])}</div><div class="g">${I(`pl.${i}.when`,'Thời gian dự kiến')}${I(`pl.${i}.who`,'Người phụ trách')}</div></div>`).join('')}</div><div class="c"><h3>💾 Lưu và chia sẻ</h3><button class="btn pdf wide" type="button" onclick="exportPDF()">📄 Xuất PDF đầy đủ thông tin</button><p class="sub" style="margin:0 0 12px">Khi hộp thoại in hiện ra, chọn “Lưu dưới dạng PDF”. Tên tệp tự lấy theo tên bạn đã nhập. Nếu thấy dòng ngày giờ hoặc đường dẫn ở đầu cuối trang, hãy tắt mục “Đầu trang và chân trang” trong hộp thoại.</p><pre id="rep"></pre><button class="btn" type="button" onclick="copyRep()">Sao chép báo cáo</button> <button class="btn g2" type="button" onclick="copyRep(window._st)">Sao chép lời nhắn</button> <button class="btn g2" type="button" onclick="if(confirm('Xóa toàn bộ dữ liệu và làm lại?')){S={p:{},st:{},ck:{},np:[],lc:[],gp:{},pl:{},cp:{},id:'KM-'+Date.now().toString(36)};save();cur=-1;R()}">Làm lại từ đầu</button></div>`}]];
+function cost(){const y=bxOn()?num(G('cp.xh_m'))*12:0,t=num(G('cp.yt_m')),np=S.np.reduce((s,r)=>s+num(r.fee),0),main=S.lc.reduce((s,c)=>s+num(c.fee),0),rd={};RD.forEach(r=>rd[r[0]]=S.lc.reduce((s,c)=>s+num(c.r?.[r[0]]?.fee),0));
+const rows=[...(bxOn()?[['BHXH tự nguyện',y]]:[]),['BHYT tự đóng',t],['Bảo hiểm phi nhân thọ',np],['Nhân thọ – phí cơ bản',main],...RD.map(r=>[r[1],rd[r[0]]]),['Quyền lợi bổ trợ khác',S.lc.reduce((s,c)=>s+(c.x||[]).reduce((a,z)=>a+num(z.fee),0),0)]];const tot=rows.reduce((s,r)=>s+r[1],0);const inc=num(G('p.income')||G('p.salary'))*12;return{rows,tot,inc,pct:inc?tot/inc*100:null}}
+function sums(){const all=S.lc.reduce((s,c)=>s+num(c.sum),0),death=all,inc=num(G('p.income')||G('p.salary'))*12;return{death,mult:inc?death/inc:null}}
+function done(){return Object.keys(CK).filter(g=>g!=='bhxh'||bxOn()).reduce((s,g)=>s+CK[g].filter((_,i)=>S.ck[g+i]).length,0)}
+function gaps(){const f=k=>GP.filter((_,i)=>G(`gp.${i}.s`)===k);return{no:GP.filter((_,i)=>['no','hi'].includes(G(`gp.${i}.s`))),hi:f('hi'),u:f('u'),ok:f('ok'),mid:f('mid')}}
+function calc(){stat();{const ph=$('#phh');if(ph){const v=String(G('p.phone')||'').replace(/[\s.\-()]/g,'');ph.textContent=v&&!/^(0\d{9}|\+?84\d{9})$/.test(v)?'Số điện thoại thường gồm 10 chữ số, bắt đầu bằng 0.':''}const dh=$('#dbh');if(dh){const d=G('p.dob');dh.textContent=d&&(d>new Date().toISOString().slice(0,10)||d<'1900-01-01')?'Ngày sinh chưa hợp lý, bạn kiểm tra lại giúp nhé.':''}}const d=done(),p=Math.round(d/TOTAL*100);
+Object.keys(CK).forEach(g=>{const n=CK[g].filter((_,i)=>S.ck[g+i]).length,t=$('#t-'+g),b=$('#b-'+g);if(t)t.textContent=n+'/'+CK[g].length;if(b)b.style.width=n/CK[g].length*100+'%'});
+const c=cost();if($('#ct')){$('#ct').innerHTML=`<table><thead><tr><th>Khoản phí</th><th>Phí/năm</th></tr></thead><tbody>${c.rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])} đ</td></tr>`).join('')}</tbody><tfoot><tr><td>Tổng chi phí bảo hiểm</td><td>${fmt(c.tot)} đ</td></tr><tr><td style="font-weight:500;font-size:13px">Trung bình mỗi tháng</td><td style="font-size:14px">${fmt(Math.round(c.tot/12))} đ</td></tr></tfoot></table>`;
+const s=sums();let h='';if(c.pct==null)h='<p class="tip">Nhập thu nhập ở bước Hồ sơ để tính tỷ lệ phí trên thu nhập.</p>';else h=`<p class="tip ${c.pct>20?'bad':c.pct<5?'':'ok'}"><b>Phí bảo hiểm chiếm ${d1(c.pct)}% thu nhập năm.</b> ${c.pct>20?'Mức này khá cao, cần xem có trùng lặp quyền lợi hoặc vượt khả năng duy trì không.':c.pct<5?'Mức thấp. Chưa chắc là đủ bảo vệ, hãy đối chiếu ở bước Khoảng trống.':'Nằm trong vùng thường được tham khảo là 10–15%, nhưng còn tùy từng gia đình.'}</p>`;
+if(s.mult!=null&&s.death>0)h+=`<p class="tip">Tổng số tiền bảo hiểm chính hiện kê: <b>${fmt(s.death)} đ</b>, tương đương <b>${d1(s.mult)} lần</b> thu nhập năm. Con số tham khảo thường dùng là 5–10 lần, tăng lên nếu có nợ hoặc nhiều người phụ thuộc.</p>`;$('#ci').innerHTML=h}
+const g=gaps();if($('#gi'))$('#gi').innerHTML=`<div class="stat"><div><b style="color:var(--ok)">${g.ok.length}</b><span>Đủ</span></div><div><b style="color:var(--bad)">${g.no.length}</b><span>Thiếu</span></div><div><b style="color:var(--gold)">${g.u.length}</b><span>Chưa rõ</span></div></div>`;
+if($('#bs')){const mf=S.lc.reduce((q,x)=>q+num(x.fee),0),rf=S.lc.reduce((q,x)=>q+lcRF(x),0);$('#bs').innerHTML=`<div><span>Số hợp đồng</span><b>${S.lc.length}</b></div><div><span>Phí sản phẩm chính/năm</span><b>${fmt(mf)} đ</b></div><div><span>Phí giải pháp đính kèm/năm</span><b>${fmt(rf)} đ</b></div><div class="gd"><span>Tổng phí nhân thọ/năm</span><b>${fmt(mf+rf)} đ</b></div>`;S.lc.forEach((x,i)=>{const e=$('#lt'+i);if(e)e.textContent=fmt(num(x.fee)+lcRF(x))+' đ/năm'})}
+if($('#rep')){const co=new Set([...S.np.map(r=>r.co),...S.lc.map(r=>r.co)].map(x=>(x||'').trim().toLowerCase()).filter(Boolean)).size;$('#rep').textContent=rep(c,g,co)}}
+function rep(c,g,co){const p=S.p,L=[];L.push('HỆ SINH THÁI BẢO HIỂM – KIỂM TRA VÀ TỐI ƯU HOÁ CÁC QUYỀN LỢI BẢO HIỂM','TỰ TIN TÀI CHÍNH – KHAI MINH','Họ tên: '+(p.name||'…')+' | Tuổi: '+(age(p.dob)||'…')+' | Nghề: '+(jobOf()||'…')+' | '+(p.gender||'')+' | '+marOf()+(p.kid==='y'?' | '+kidsStr():''),'Thu nhập/tháng: '+fmt(num(p.income))+' đ | Người phụ thuộc: '+(p.dep||'…'),'','Hợp đồng đã kê: '+(S.np.length+S.lc.length)+' ('+co+' công ty)','Tổng phí/năm: '+fmt(c.tot)+' đ'+(c.pct!=null?' ('+c.pct.toFixed(1)+'% thu nhập)':''),'');
+if(p.nt==='n')L.push('NHÂN THỌ: CHƯA THAM GIA'+(p.ntn?' – '+p.ntn:''));S.lc.forEach((x,i)=>{L.push(`NHÂN THỌ ${i+1}: ${x.co||'…'} – ${x.pr||'…'} | STBH ${fmt(num(x.sum))} đ | Phí cơ bản ${fmt(num(x.fee))} đ/năm`);RD.forEach(([k,t])=>{const r=x.r?.[k];if(r?.on)L.push(`  + ${t}: ${fmt(num(r.lim))} đ | phí ${fmt(num(r.fee))} đ/năm | ${r.term||''} ${r.note||''}`)});(x.x||[]).forEach(z=>L.push(`  + Khác: ${z.name||'…'}: ${fmt(num(z.lim))} đ | phí ${fmt(num(z.fee))} đ/năm | ${z.term||''} ${z.note||''}`))});
+S.np.forEach(r=>L.push(`PHI NHÂN THỌ: ${r.t||'…'} – ${r.co||'…'} ${r.pr||''} | hạn mức ${fmt(num(r.lim))} đ | phí ${fmt(num(r.fee))} đ/năm`));
+L.push('','Khoảng trống: '+(g.no.join('; ')||'chưa ghi nhận'),'Chưa rõ: '+(g.u.join('; ')||'không'),'','Kế hoạch:');PL.forEach((t,i)=>{const q=S.pl[i]||{};if(q.pr||q.when||q.who)L.push(`- ${t} | ${PRN[q.pr]||''} | ${q.when||''} | ${q.who||''}`)});return L.join('\n')}
+function copyRep(t0){const t=t0||$('#rep').textContent;try{navigator.clipboard.writeText(t).then(()=>alert('Đã sao chép báo cáo'),()=>fb(t))}catch(e){fb(t)}}
+function fb(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');alert('Đã sao chép báo cáo')}catch(e){alert('Hãy chọn và sao chép thủ công')}a.remove()}
+const TIC=['👤','🏛️','🛡️','💖','💰','🔍','🌟'],TT=['Hồ sơ của bạn','Bảo hiểm bắt buộc','Bảo hiểm phi nhân thọ','Bảo hiểm nhân thọ','Chi phí bảo hiểm','Khoảng trống bảo vệ','Kết luận và kế hoạch'];
+const DESC=['Thông tin cá nhân, nghề nghiệp, gia đình','BHXH, BHYT, BHTN','Sức khỏe, tai nạn, xe, tài sản','Hợp đồng và giải pháp đính kèm','Tổng phí và tỷ lệ trên thu nhập','Rà soát 14 hạng mục cần bảo vệ','Báo cáo và kế hoạch hành động'];
+const nC=g=>CK[g].filter((_,i)=>S.ck[g+i]).length;
+function stat(){const p=S.p,c=cost(),f=['name','dob','gender','job','income','mar','kid'].filter(k=>p[k]).length,as=GP.filter((_,i)=>G(`gp.${i}.s`)).length;
+const a=[f+'/7',(nC('bhxh')+nC('bhyt'))+'/17',S.np.length?S.np.length+' hợp đồng':nC('pnt')+'/12',p.nt==='y'?S.lc.length+' hợp đồng':p.nt==='n'?'Chưa tham gia':'Chưa nhập',c.tot?fmt(c.tot)+' đ/năm':'Chưa có',as+'/14',done()+'/61'];a.forEach((t,i)=>{const e=$('#st'+i);if(e)e.textContent=t})}
+function R(){const y=scrollY;$('#v').innerHTML=STEPS.map((s,i)=>{const o=cur===i;return `<section class="ac${o?' open':''}" id="ac${i}"><button class="ah" type="button" onclick="tog(${i})" aria-expanded="${o}"><span class="no">${i+1}</span><span class="tx"><b>${TIC[i]} ${TT[i]}</b><small>${i===1&&!bxOn()?'BHYT và các bảo hiểm khác':DESC[i]}</small></span><span class="ch" aria-hidden="true"></span></button>${o?`<div class="ab">${s[1]()}<div class="nav2"><button class="btn g2" type="button" onclick="tog(${i})">Đóng mục này</button>${i<6?`<button class="btn" type="button" onclick="tog(${i+1})">Sang mục ${i+2}</button>`:''}</div></div>`:''}</section>`}).join('')+'<p class="foot">Thông tin bạn nhập được tự động gửi về Google Sheet của người hướng dẫn. Công cụ này hỗ trợ tự đánh giá, không thay thế hợp đồng, điều khoản và tư vấn chuyên môn.</p>';calc();scrollTo(0,y)}
+function tog(i){cur=cur===i?-1:i;R();if(cur>=0)requestAnimationFrame(()=>{const e=$('#ac'+cur);if(e)scrollTo({top:e.getBoundingClientRect().top+scrollY-8})})}
+
+document.addEventListener('input',e=>{const el=e.target,p=el.dataset.b;if(!p)return;let v=el.type==='checkbox'?el.checked:el.value;if(el.dataset.m){v=num(v);el.value=v?fmt(v):''}X(p,v);if(p==='p.dob'){const a=$('#age');if(a)a.value=age(v)}if(p==='p.nk')kidsR();if(p==='p.job')R();save();calc();if(el.type==='checkbox'&&p.includes('.r.'))R()});
+function sheets(){const p=S.p,c=cost(),D=S.id,nm=p.name||'',m=num,tt={y:'Đang có',n:'Chưa',u:'Chưa rõ'},ntx=p.nt==='y'?'Đã tham gia':p.nt==='n'?'Chưa tham gia':'Chưa trả lời';
+const T={};const put=(n,h,r)=>T[n]={h:['Mã hồ sơ','Họ tên',...h],r};
+T['Hồ sơ']={h:['Mã hồ sơ','Cập nhật','Họ tên','Ngày sinh','Tuổi','Giới tính','Nghề nghiệp','Thu nhập/tháng','Lương/tháng','Người phụ thuộc','Hôn nhân','Có con','Số con','Tuổi các con','Điện thoại','Địa chỉ','Nơi làm việc','Nhóm lao động','Bảo hiểm nhân thọ','Lý do/dự định BHNT','Tổng phí BH/năm','% thu nhập','Tiêu chí đã xác nhận','Tham gia BHXH'],r:[[D,new Date().toLocaleString('vi-VN'),nm,p.dob||'',age(p.dob),p.gender||'',jobOf(),m(p.income),m(p.salary),p.dep||'',marOf(),p.kid==='y'?'Có':p.kid==='n'?'Chưa':'',p.kid==='y'?(p.nk||''):0,kidsStr(),p.phone||'',p.addr||'',p.work||'',GRP[p.grp]||'',ntx,p.ntn||'',c.tot,c.pct==null?'':+c.pct.toFixed(1),done()+'/'+(bxOn()?61:52),({y:'Có',n:'Không'})[p.bx]||'Chưa trả lời']]};
+put('BHXH-BHYT',['Loại','Tình trạng'],ST.map((t,i)=>[D,nm,t,tt[S.st[i]]||'']).filter((r,i)=>bxOn()||!BXI.includes(i)));
+const e=Array(19).fill('');e[16]=p.ntn||'';
+put('Nhân thọ',['Trạng thái','STT','Công ty','Sản phẩm','Số HĐ','Bên mua','Người được BH','Ngày bắt đầu','Thời hạn','Thời hạn đóng phí','Số tiền BH chính','Phí cơ bản/năm','Quyền lợi tử vong','Thương tật TB&VV','Đáo hạn','Giá trị TK/hoàn lại','Người thụ hưởng','Tình trạng HĐ','Phí bổ trợ/năm','Tổng phí HĐ/năm'],p.nt==='y'?S.lc.map((x,i)=>{const rf=RD.reduce((s,r)=>s+m(x.r?.[r[0]]?.fee),0)+(x.x||[]).reduce((a,z)=>a+m(z.fee),0);return [D,nm,'Đã tham gia',i+1,x.co||'',x.pr||'',x.no||'',x.buy||'',x.ins||'',x.start||'',x.term||'',x.pay||'',m(x.sum),m(x.fee),m(x.death),m(x.tpd),m(x.mat),m(x.val),x.ben||'',x.sts||'',rf,m(x.fee)+rf]}):p.nt==='n'?[[D,nm,'Chưa tham gia',...e]]:[]);
+const rd=[];S.lc.forEach((x,i)=>{if(p.nt!=='y')return;RD.forEach(([k,t])=>{const r=x.r?.[k];if(r?.on)rd.push([D,nm,i+1,x.co||'',t,m(r.lim),m(r.fee),r.term||'',r.note||''])});(x.x||[]).forEach(z=>rd.push([D,nm,i+1,x.co||'',z.name||'Khác',m(z.lim),m(z.fee),z.term||'',z.note||'']))});
+put('Quyền lợi bổ trợ',['STT HĐ','Công ty','Quyền lợi','Hạn mức','Phí/năm','Thời hạn','Chi tiết'],rd);
+put('Phi nhân thọ',['STT','Loại','Công ty','Sản phẩm','Hạn mức','Phí/năm','Thời hạn'],S.np.map((r,i)=>[D,nm,i+1,r.t||'',r.co||'',r.pr||'',m(r.lim),m(r.fee),r.term||'']));
+put('Chi phí',['Khoản phí','Phí/năm'],c.rows.map(r=>[D,nm,r[0],r[1]]));
+put('Khoảng trống',['Hạng mục','Đánh giá','Hiện có','Nhu cầu'],GP.map((t,i)=>{const g=S.gp[i]||{};return [D,nm,t,{ok:'Yên tâm',mid:'Tạm ổn',u:'Chưa rõ',no:'Còn lo',hi:'Rất lo'}[g.s]||'',g.have||'',g.need||'']}));
+put('Checklist',['Nhóm','Tiêu chí','Kết quả'],Object.keys(CK).filter(g=>g!=='bhxh'||bxOn()).flatMap(g=>CK[g].map((t,i)=>[D,nm,CKT[g],t,S.ck[g+i]?'Đã xác nhận':'Chưa'])));
+put('Kế hoạch',['Việc cần làm','Ưu tiên','Thời gian','Phụ trách'],PL.map((t,i)=>{const q=S.pl[i]||{};return [D,nm,t,PRN[q.pr]||'',q.when||'',q.who||'']}));
+const sy=story();put('Kết luận',['Mục','Nội dung'],sy.secs.map(x=>[D,nm,x.t,x.k==='rf'?x.p.map(r=>r[0]+' → '+r[1]).join('\n'):x.p.join('\n')]));
+put('Khai vấn',['Câu hỏi','Câu trả lời'],sy.Q.map((q,i)=>[D,nm,q,S.cp['cq'+i]||'']));
+const av=advisor();put('Tóm tắt tư vấn',ADV_H,[[D,nm,...av.row]]);
+return {'Tóm tắt tư vấn':T['Tóm tắt tư vấn'],...T}}
+let syT,dirty=false;
+const chip=(t,c)=>{const e=$('#sy');if(e){e.textContent=t;e.className='sync '+(c||'')}};
+function schedule(){if(!SHEET_URL){chip('Chưa kết nối Sheet · dữ liệu đang lưu trên máy','w');return}dirty=true;chip('Đang chờ gửi…');clearTimeout(syT);syT=setTimeout(push,1500)}
+async function push(){if(!SHEET_URL)return;const body=JSON.stringify({id:S.id,key:SHEET_KEY,sheets:sheets()}),H={'Content-Type':'text/plain;charset=utf-8'},tm=()=>new Date().toLocaleTimeString('vi-VN');try{chip('Đang gửi về Sheet…');let r=null;try{r=await(await fetch(SHEET_URL,{method:'POST',headers:H,body})).json()}catch(e){await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:H,body})}
+if(r&&r.ok===false){chip('Sheet báo lỗi: '+r.error,'bad');return}
+dirty=false;chip(r&&r.ok?'Đã gửi · Sheet xác nhận lúc '+tm():'Đã gửi lúc '+tm()+' (chưa đọc được xác nhận)','ok')}catch(e){chip('Mất kết nối, sẽ tự gửi lại','bad');setTimeout(push,8000)}}
+async function ping(){chip('Đang kiểm tra…');try{const r=await(await fetch(SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({id:'KM-ping',key:SHEET_KEY,sheets:{}})})).json();chip(r.ok?'Kết nối tốt: Sheet đã phản hồi':'Sheet báo lỗi: '+r.error,r.ok?'ok':'bad')}catch(e){chip('Không đọc được phản hồi. Hãy kiểm tra link /exec và quyền truy cập “Bất kỳ ai”.','bad')}}
+addEventListener('online',()=>{if(dirty)push()});
+addEventListener('pagehide',()=>{if(dirty&&SHEET_URL&&navigator.sendBeacon)navigator.sendBeacon(SHEET_URL,new Blob([JSON.stringify({id:S.id,key:SHEET_KEY,sheets:sheets()})],{type:'text/plain'}))});
+const QS=['Tự tin tài chính bắt đầu từ việc biết rõ mình đang có gì.','Bảo hiểm không phải chi phí, mà là lá chắn giữ vững thành quả bạn đã dày công gây dựng.','Người chủ động hôm nay là người bình an ngày mai.','Không ai biết ngày mai ra sao, nhưng ai cũng có thể chuẩn bị cho nó.','Một kế hoạch bảo vệ rõ ràng mang lại giấc ngủ yên hơn bất kỳ con số nào.','Yêu thương gia đình là chuẩn bị sẵn cho những điều mình không mong xảy ra.','Mỗi quyết định tài chính nhỏ hôm nay là một viên gạch cho tương lai vững vàng.','Đừng đợi rủi ro đến mới thấy giá trị của sự chuẩn bị.','Bạn đã gánh nhiều điều cho người khác; hôm nay hãy để chính mình cũng được che chở.','Giàu có không chỉ là có nhiều, mà là không phải lo thiếu khi cần.','Mỗi lần ta chuẩn bị chu đáo là một lần nói lời yêu thương bằng việc làm.','Một gia đình vững vàng bắt đầu từ một người dám nhìn thẳng vào kế hoạch.','Rủi ro không hỏi ta đã sẵn sàng chưa, nhưng sự chuẩn bị luôn đến sớm hơn nỗi lo.','Tiền có thể kiếm lại, còn sức khỏe và thời gian bên người thương thì cần được gìn giữ.','Đừng so sánh mình với ai, hãy hỏi mình đã bảo vệ điều quý giá nhất của mình chưa.','Biết mình đang có gì là cách giản dị nhất để thôi lo lắng vô cớ.','Cẩn thận hôm nay là nụ cười của ngày mai.','Có chuẩn bị, lòng ta mới bình thản khi gió đổi chiều.'];
+let qi=0,qT;
+function showQ(i,fast){qi=(i+QS.length)%QS.length;const b=$('#qtx');if(!b)return;const set=()=>{b.textContent=QS[qi];document.querySelectorAll('#qd button').forEach((x,k)=>x.classList.toggle('on',k===qi));b.classList.remove('out')};if(fast){set();return}b.classList.add('out');setTimeout(set,350)}
+function resetQ(){clearInterval(qT);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)qT=setInterval(()=>showQ(qi+1),6500)}
+function initQ(){$('#qd').innerHTML=QS.map((_,i)=>`<button type="button" aria-label="Câu ${i+1}" onclick="showQ(${i});resetQ()"></button>`).join('');showQ(Math.floor(Math.random()*QS.length),true);resetQ()}
+function start(){const e=$('#v');scrollTo({top:e.getBoundingClientRect().top+scrollY-8,behavior:'smooth'})}
+initQ();
+if(new URLSearchParams(location.search).has('admin')){const d=document.createElement('div');d.style.cssText='margin-top:16px';d.innerHTML='<div class="sync" id="sy" style="display:block;width:fit-content;margin:0 auto 8px"></div><button class="btn g2" type="button" id="pgb">Kiểm tra kết nối Sheet</button>';document.querySelector('.cv').appendChild(d);$('#pgb').onclick=()=>SHEET_URL?ping():chip('Chưa dán link Web App vào SHEET_URL','bad');chip(SHEET_URL?'Chế độ kiểm tra: bấm nút để thử kết nối':'Chưa dán link Web App vào SHEET_URL','w')}
+R();
+</script></body></html>
